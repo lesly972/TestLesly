@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: page_head}"></head>
+<body>
+
+<nav th:replace="~{layout :: page_navbar}"></nav>
+
+<span th:text="${notif}"></span>
+
+<div class="container py-3">
+    <h1 class="text-center my-4"> Restaurant <span th:if="${restaurant.nom != null}" th:text="${restaurant.nom}"> </span> </h1>
+</div>
+<!-- <span th:text="${restaurant.nom}"> </span>
+<span th:text="${restaurant.id}"> </span> -->
+
+<footer th:replace="~{layout :: page_footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
