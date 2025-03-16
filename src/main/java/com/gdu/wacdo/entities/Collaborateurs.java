@@ -10,10 +10,10 @@ public class Collaborateurs {
     private String prenom;
     private String email;
     private String motDePasse;
-    private String datePremierEmbauche;
+    private Date datePremierEmbauche;
     private Boolean isAdministrateur;
 
-    public Collaborateurs( Boolean isAdministrateur, String datePremierEmbauche, String prenom, String email, String nom, String motDePasse,Long id) {
+    public Collaborateurs( Boolean isAdministrateur, Date datePremierEmbauche, String prenom, String email, String nom, String motDePasse,Long id) {
         this.motDePasse = motDePasse;
         this.prenom = prenom;
         this.nom = nom;
