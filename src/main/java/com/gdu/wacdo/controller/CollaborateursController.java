@@ -2,6 +2,7 @@ package com.gdu.wacdo.controller;
 
 import com.gdu.wacdo.entities.Collaborateurs;
 import com.gdu.wacdo.entities.Restaurants;
+import com.gdu.wacdo.service.CollaborateursService;
 import com.gdu.wacdo.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -18,13 +20,19 @@ import java.util.List;
 
 public class CollaborateursController {
 
+    public final CollaborateursService collaborateursService;
+
+    public CollaborateursController(CollaborateursService collaborateursService) {this.collaborateursService = collaborateursService;
+    }
+
+
     @GetMapping("/collaborateurs/")
 
     public String getCollaborateursList(Model model) {
 
         List<Collaborateurs> collaborateursList = List.of(
-                new Collaborateurs(false,"2020/01/02","fafa","tt@ff.com","ffff","fdfff",1L),
-                new Collaborateurs(false,"2020/01/02","faddddfa","tadadat@ff.com","ffdadadff","fddaadfff",2L)
+                new Collaborateurs(false,new Date(),"fafa","tt@ff.com","ffff","fdfff",1L),
+                new Collaborateurs(false,new Date(),"faddddfa","tadadat@ff.com","ffdadadff","fddaadfff",2L)
         );
 
         log.info("-------------- collaborateursList for view : {}", collaborateursList);
@@ -35,23 +43,10 @@ public class CollaborateursController {
     }
 
     @GetMapping("/collaborateurs/{id}")
-    public String getCollaborateurDetails(@PathVariable("id") Long id, Model model) {
+// Pathvariable récup un param de l'url
+  public String getCollaborateurDetails(@PathVariable("id") Long id, Model model) {
 
-        //  Récupération de la même liste "statique" que plus haut
-        List<Collaborateurs> collaborateursList = List.of(
-                new Collaborateurs(false, "2020/01/02", "fafa", "tt@ff.com", "ffff", "fdfff", 1L),
-                new Collaborateurs(false, "2020/01/02", "toto", "toto@wacdo.com", "toto", "motdepasse", 2L)
-        );
-
-        //  Cherche le collaborateur correspondant
-        Collaborateurs collaborateurTrouve = null;
-        for (Collaborateurs c : collaborateursList) {
-            if (c.getId().equals(id)) {
-                collaborateurTrouve = c;
-                break;
-            }
-        }
-
+        Collaborateurs collaborateurTrouve = collaborateursService.getCollabDetails(id);
         if (collaborateurTrouve != null) {
             model.addAttribute("collaborateur", collaborateurTrouve);
         } else {
