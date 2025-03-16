@@ -18,6 +18,7 @@ import java.util.List;
 //Affiche les logs
 @Slf4j
 public class RestaurantController {
+
     public final RestaurantService restaurantService;
 
     public RestaurantController(RestaurantService restaurantService) {
