@@ -25,6 +25,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurants/")
+
     public String getRestaurantsList(Model model) {
 
         List<Restaurants> restaurantsList = List.of(
@@ -32,7 +33,7 @@ public class RestaurantController {
                 new Restaurants("etrepagny","27150","31 rue saint","Wacdo Normandie",2L)
         );
 
-        model.addAttribute("notif", "cet attribut est ok"); // Pousse les infos à afficher dans le fichier html
+        //model.addAttribute("notif", "cet attribut est ok"); // Pousse les infos à afficher dans le fichier html
 
         log.info("-------------- restaurantList for view : {}", restaurantsList);
 

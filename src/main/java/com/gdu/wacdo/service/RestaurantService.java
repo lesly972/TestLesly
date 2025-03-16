@@ -11,6 +11,7 @@ import java.util.List;
 
 public class RestaurantService {
 
+
     public Restaurants getDetails (Long id) {
         List<Restaurants> restaurantsList = List.of(
                 new Restaurants("Defense","92000","1 rue blabla","Wacdo Defense",3L) , // id 3 et non 1 pour les test et affichage de page non trouvée ( voir dans la class RestaurantController)

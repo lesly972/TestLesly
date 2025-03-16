@@ -1,13 +1,27 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout :: page_head}"></head>
-<body>
+
+<body style="background-color: #2c2c2c; color: #ffffff;">
 
 <nav th:replace="~{layout :: page_navbar}"></nav>
 
     <div class="container py-3">
-        <h1 class="text-center my-4">Les nouveaux restaurants WACDO</h1>
+        <h1 class="text-center my-4">Les restaurants WACDO</h1>
     </div>
+
+<section class="wacdo-presentation">
+    <h2>À propos de WACDO</h2>
+    <p><strong>WACDO</strong> est une chaîne de restaurants créée en <strong>2005</strong>, spécialisée dans la restauration rapide de qualité.
+        Notre objectif est de proposer des repas savoureux et accessibles à tous, dans un cadre chaleureux et moderne.</p>
+
+    <p>Depuis ses débuts, WACDO s'est développée dans plusieurs régions de France, avec des établissements implantés aussi bien en milieu urbain qu'en zones rurales.
+        Fort de son engagement pour la satisfaction client, WACDO met un point d'honneur à travailler avec des produits locaux et à garantir un service rapide et efficace.</p>
+
+    <p>En 2024, WACDO compte plus de <strong>50 restaurants</strong> répartis sur tout le territoire français, et continue d’innover en proposant des menus adaptés à tous les goûts.</p>
+
+    <p><em>Notre devise :</em> "Bien manger, partout et pour tous !"</p>
+</section>
 
     <footer th:replace="~{layout :: page_footer}"></footer>
 

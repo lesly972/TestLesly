@@ -1,0 +1,15 @@
+<h1>Détails du Collaborateur</h1>
+
+<div th:if="${collaborateur != null}">
+    <p>Nom : <span th:text="${collaborateur.nom}"></span></p>
+    <p>Prénom : <span th:text="${collaborateur.prenom}"></span></p>
+    <p>Email : <span th:text="${collaborateur.email}"></span></p>
+    <p>Date d'embauche : <span th:text="${collaborateur.datePremierEmbauche}"></span></p>
+    <p>Administrateur : <span th:text="${collaborateur.isAdministrateur ? 'Oui' : 'Non'}"></span></p>
+</div>
+
+<div th:if="${collaborateur == null}">
+    <p th:text="${notif}"></p>
+</div>
+
+<a href="/collaborateurs">⬅ Retour à la liste</a>
