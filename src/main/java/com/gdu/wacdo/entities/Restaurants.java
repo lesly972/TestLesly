@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Data
+//@Data
 
 //Entity va dire à la base d'utiliser le nom de la class ici Restaurants pour la transformer en table
 @Entity
@@ -27,10 +27,13 @@ public class Restaurants {
         this.codePostal = codePostal;
         this.adresse = adresse;
         this.nom = nom;
-        this.id = id;
+        // this.id = id;
     }
 
     public Restaurants() {
 
+    }
+
+    public Restaurants(Object nom, Object ville, Object adresse, Object codePostal) {
     }
 }

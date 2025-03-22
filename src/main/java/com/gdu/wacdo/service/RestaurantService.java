@@ -1,6 +1,8 @@
 package com.gdu.wacdo.service;
 
+import com.gdu.wacdo.dtos.RestaurantsDto;
 import com.gdu.wacdo.entities.Restaurants;
+import com.gdu.wacdo.repositories.RestaurantsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,20 @@ import java.util.List;
 
 public class RestaurantService {
 
+    private final RestaurantsRepository restaurantsRepository;
+
+    public RestaurantService(RestaurantsRepository restaurantsRepository) {
+        this.restaurantsRepository = restaurantsRepository;
+    }
+
+    public Restaurants saveRestaurants(RestaurantsDto dto){
+        //crétion d'une antité vide
+        Restaurants restaurants = new Restaurants(dto.getNom(),dto.getVille(),dto.getAdresse(),dto.getCodePostal());
+
+        try {
+            restaurantsRepository.save(restaurants);
+        }
+    }
 
     public Restaurants getDetails (Long id) {
         List<Restaurants> restaurantsList = List.of(
