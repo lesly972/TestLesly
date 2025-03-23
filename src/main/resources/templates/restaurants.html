@@ -18,10 +18,10 @@
     <div style="text-align: center;">
         <form method="POST" th:action="@{/myFormRestaurants}" th:object="${restaurantsDto}" class="w-10/12 mx-auto flex justify-center">
             <input type="text" name="nom" placeholder="Nom du restaurant" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
-            <input type="text" name="adresse" placeholder="Adresse" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12">
-            <input type="text" name="codePostal" placeholder="CP" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12">
-            <input type="text" name="ville" placeholder="Ville" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12">
-            <input type="submit" value="Enregistrer" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12">
+            <input type="text" name="adresse" placeholder="Adresse" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+            <input type="text" name="codePostal" placeholder="CP" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+            <input type="text" name="ville" placeholder="Ville" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+            <input type="submit" value="Enregistrer" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
          </form>
     </div>
 
@@ -31,10 +31,10 @@
     <div style="text-align: center;">
         <div th:each="restaurant : ${restaurantList}" class="flex justify-center">
 
+             <a th:href="@{/restaurant/{id}(id=${restaurant.id})}">
+                 <span th:text="${restaurant.nom}"> </span> <span th:text="${restaurant.getVille()}"> </span>
+             </a>
 
-            <!-- <a th:href="@{/restaurant/{id}(id=${restaurant.id})}">
-                 <span th:text="${restaurant.nom}"> </span>
-             </a>-->
          </div>
      </div>
 
