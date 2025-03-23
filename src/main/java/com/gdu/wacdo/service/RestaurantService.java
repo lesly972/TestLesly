@@ -21,8 +21,10 @@ public class RestaurantService {
 
     public Restaurants saveRestaurants(RestaurantsDto dto){
         //crétion d'une antité vide
+        log.info(">> DONNÉES REÇUES dans service : {}" , dto.getVille());
         Restaurants restaurants = new Restaurants(dto.getNom(),dto.getVille(),dto.getAdresse(),dto.getCodePostal());
         try {
+            log.info(">> DONNÉES REÇUES dans service : {}" , restaurants.getVille());
             //Restaurants restaurantsReponse = restaurantsRepository.save(restaurants);
             return restaurantsRepository.save(restaurants);
 
