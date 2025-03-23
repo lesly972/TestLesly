@@ -1,5 +1,8 @@
 package com.gdu.wacdo.dtos;
 
+import lombok.Getter;
+
+@Getter
 public class RestaurantsDto {
 
     private String nom;
@@ -16,22 +19,5 @@ public class RestaurantsDto {
     }
 
     public RestaurantsDto() {
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public String getCodePostal() {
-        return codePostal;
     }
 }

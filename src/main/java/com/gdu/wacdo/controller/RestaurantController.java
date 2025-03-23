@@ -43,20 +43,20 @@ public class RestaurantController {
         return "restaurants"; //Retour sur le fichier HTML restaurants
     }
 
-    @GetMapping("/restaurant/{id}")
-    public String getRestaurantDetails(@PathVariable("id") Long id, Model model){
+   // @GetMapping("/restaurant/{id}")
+   // public String getRestaurantDetails(@PathVariable("id") Long id, Model model){
 
-       Restaurants restaurants = restaurantService.getDetails(id);
+       //Restaurants restaurants = restaurantService.getDetails(id);
 
-       if(restaurants != null){
+     //  if(restaurants != null){
 
-           model.addAttribute("restaurant", restaurants);
-       }
-       else {
-           model.addAttribute("restaurant", new Restaurants(null,null,null,null,null));
-           model.addAttribute("notif", "Aucun restaurant trouvé");
-       }
+         //  model.addAttribute("restaurant", restaurants);
+    //}
+       //else {
+          // model.addAttribute("restaurant", new Restaurants(null,null,null,null,null));
+          // model.addAttribute("notif", "Aucun restaurant trouvé");
+      // }
 
-       return "restaurantDetails";
-    }
+      // return "restaurantDetails";
+    //}
 }

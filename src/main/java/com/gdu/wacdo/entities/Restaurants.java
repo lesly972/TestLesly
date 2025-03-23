@@ -27,7 +27,7 @@ public class Restaurants {
         this.codePostal = codePostal;
         this.adresse = adresse;
         this.nom = nom;
-        // this.id = id;
+        this.id = id;
     }
 
     public Restaurants() {
