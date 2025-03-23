@@ -1,5 +1,6 @@
 package com.gdu.wacdo.controller;
 
+import com.gdu.wacdo.dtos.RestaurantsDto;
 import com.gdu.wacdo.entities.Restaurants;
 import com.gdu.wacdo.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
@@ -7,11 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Controller
 
@@ -19,44 +19,34 @@ import java.util.List;
 @Slf4j
 public class RestaurantController {
 
-    public final RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
 
     public RestaurantController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
     }
 
-    @GetMapping("/restaurants/")
+    // Défini le lien à utiliser pour afficher la page web
+    @GetMapping("/restaurants")
+    public String getHomePage(Model model){
+        model.addAttribute("restaurantsDto",new RestaurantsDto());
+        model.addAttribute("restaurantList",restaurantService.getAllRestaurants());
 
-    public String getRestaurantsList(Model model) {
+        System.out.println("Chargement de la page avec DTO vide");
 
-        List<Restaurants> restaurantsList = List.of(
-                new Restaurants("Defense","92000","1 rue blabla","Wacdo Defense",1L) ,
-                new Restaurants("etrepagny","27150","31 rue saint","Wacdo Normandie",2L)
-        );
-
-        //model.addAttribute("notif", "cet attribut est ok"); // Pousse les infos à afficher dans le fichier html
-
-        log.info("-------------- restaurantList for view : {}", restaurantsList);
-
-        model.addAttribute("restaurantList", restaurantsList); // Pousse les infos à afficher dans le fichier html
-
-        return "restaurants"; //Retour sur le fichier HTML restaurants
+        return "restaurants";
     }
 
-   // @GetMapping("/restaurant/{id}")
-   // public String getRestaurantDetails(@PathVariable("id") Long id, Model model){
+    @PostMapping("/myFormRestaurants")
+    public String getDataRestaurants(RestaurantsDto dto, Model model){
 
-       //Restaurants restaurants = restaurantService.getDetails(id);
+        log.info(">> DONNÉES REÇUES : {}" , dto.getVille());
 
-     //  if(restaurants != null){
+        Restaurants restaurantsResponse = restaurantService.saveRestaurants(dto);
 
-         //  model.addAttribute("restaurant", restaurants);
-    //}
-       //else {
-          // model.addAttribute("restaurant", new Restaurants(null,null,null,null,null));
-          // model.addAttribute("notif", "Aucun restaurant trouvé");
-      // }
+        //affiche directement la liste une fois retourné ou ajout d'un retaurant
+        model.addAttribute("restaurantList",restaurantService.getAllRestaurants());
+        return "restaurants";
+    }
 
-      // return "restaurantDetails";
-    //}
+
 }
