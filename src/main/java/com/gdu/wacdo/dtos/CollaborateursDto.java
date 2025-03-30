@@ -1,46 +1,33 @@
-package com.gdu.wacdo.entities;
-import jakarta.persistence.*;
-import lombok.Data;
+package com.gdu.wacdo.dtos;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
-import java.util.List;
 
-//@Data
-
-@Entity
-public class Collaborateurs {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CollaborateursDto {
 
     private String nom;
     private String prenom;
     private String email;
     private String motDePasse;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // Permet d'adapter le format de la date
     private Date datePremierEmbauche;
-    private Boolean isAdministrateur;
+    private Boolean administrateur;
 
-    @OneToMany(mappedBy = "collaborateurs")
-    private List<Affectation> affectations;
-
-    public Collaborateurs( String nom,String prenom, String email, String motDePasse,Date datePremierEmbauche,Boolean isAdministrateur ) {
-        this.motDePasse = motDePasse;
-        this.prenom = prenom;
+    public CollaborateursDto(String nom,String prenom, String email, String motDePasse, Date datePremierEmbauche, Boolean administrateur) {
         this.nom = nom;
+        this.prenom = prenom;
         this.email = email;
+        this.motDePasse = motDePasse;
         this.datePremierEmbauche = datePremierEmbauche;
-        this.isAdministrateur = isAdministrateur;
-    }
-
-    public Collaborateurs() {
+        this.administrateur = administrateur;
 
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
+    public CollaborateursDto() {
+
     }
 
     public String getNom() {
@@ -84,11 +71,12 @@ public class Collaborateurs {
     }
 
     public Boolean getAdministrateur() {
-        return isAdministrateur;
+        return administrateur;
     }
 
     public void setAdministrateur(Boolean administrateur) {
-        isAdministrateur = administrateur;
+        this.administrateur = administrateur;
     }
+
 
 }

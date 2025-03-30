@@ -1,10 +1,8 @@
 package com.gdu.wacdo.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import java.util.List;
 
 //@Data
 
@@ -21,6 +19,9 @@ public class Restaurants {
     private String adresse;
     private String codePostal;
     private String ville;
+
+    @OneToMany(mappedBy = "restaurants")
+    private List<Affectation> affectations;
 
     public Restaurants(String ville, String codePostal, String adresse, String nom) {
         this.ville = ville;
@@ -72,4 +73,5 @@ public class Restaurants {
     public void setVille(String ville) {
         this.ville = ville;
     }
+
 }

@@ -8,7 +8,30 @@
 <span th:text="${notif}"></span>
 
 <div class="container py-3">
-    <h1 class="text-center my-4">Liste collaborateurs WACDO</h1>
+    <h1 class="text-center my-4">Collaborateurs WACDO</h1>
+</div>
+
+<!-- Partie qui permet d'ajouter des collaborateurs dans la BdD -->
+<h4 class="text-center my-4">Ajouter un collaborateur</h4>
+
+<div style="text-align: center;">
+    <form method="POST" th:action="@{/myFormCollaborateurs}" th:object="${collaborateursDto}" class="w-10/12 mx-auto flex justify-center">
+        <input type="text" name="nom" placeholder="Nom du collaborateur" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+        <input type="text" name="prenom" placeholder="Prénom du collaborateur" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+        <input type="email" name="email" placeholder="Adresse Mail" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+        <input type="password" name="motDePasse" placeholder="Mot de Passe" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+        <input type="date" name="datePremierEmbauche" placeholder="Date Premier Embauche" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+
+        <span>Administrateur :</span>
+        <input type="radio" th:field="*{administrateur}" value="true" /> Oui
+        <input type="radio" th:field="*{administrateur}" value="false" /> Non
+
+        <input type="submit" value="Enregistrer" class="btn btn-primary"/>
+    </form>
+</div>
+
+<div class="container py-3">
+    <h4 class="text-center my-4">Liste collaborateurs WACDO</h4>
 </div>
 
 <!-- <div th:each="collab : ${collaborateursList}" class="collab-card">
@@ -29,12 +52,20 @@
     </form>
 </div> -->
 
-<div th:each="collab : ${collaborateursList}" class="collab-card">
-    <p>Nom : <span th:text="${collab.nom}" ></span></p>
-    <p>Prénom : <span th:text="${collab.prenom}"></span></p>
+<div style="text-align: center;">
 
-    <!-- Lien cliquable vers la fiche individuelle -->
-    <a th:href="@{/collaborateurs/{id}(id=${collab.id})}">Voir détails</a>
+    <div th:each="collab : ${collaborateursList}" class="collab-card">
+
+        <!-- Lien cliquable vers la fiche individuelle -->
+        <a th:href="@{/collaborateurs/{id}(id=${collab.id})}">
+            <span th:text="${collab.nom}" ></span> <span th:text="${collab.prenom}"></span>
+        </a>
+
+        <!-- boutton pour modifier les informations du collaborateur dans une page edit -->
+        <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collab.id})}" class="btn btn-primary">Modifier</a></td>
+
+    </div>
+
 </div>
 
 <footer th:replace="~{layout :: page_footer}"></footer>

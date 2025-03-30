@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout :: page_head}"></head>
-<body>
+
+<body  style="background-color: #2c2c2c; color: #ffffff;">
 
 <nav th:replace="~{layout :: page_navbar}"></nav>
 
@@ -10,8 +11,11 @@
 <div class="container py-3">
     <h1 class="text-center my-4"> Restaurant <span th:if="${restaurant.nom != null}" th:text="${restaurant.nom}"> </span> </h1>
 </div>
-<!-- <span th:text="${restaurant.nom}"> </span>
-<span th:text="${restaurant.id}"> </span> -->
+
+<h5> Nom du restaurant : </h5> <span th:text="${restaurant.nom}"></span>
+<p><h5>Adresse du restaurant:</h5> <span th:text="${restaurant.adresse}"></span> <span th:text="${restaurant.codePostal} + ' ' + ${restaurant.ville}"></span></p>
+
+<p><p><a href="/restaurants">⬅ Retour à la liste</a></p></p>
 
 <footer th:replace="~{layout :: page_footer}"></footer>
 

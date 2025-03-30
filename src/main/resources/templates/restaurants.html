@@ -13,7 +13,7 @@
     </div>
 
     <!-- Partie qui permet d'ajouter des restaurants dans la BdD -->
-    <h4 class="text-center my-4">Ajouter un restaurants</h4>
+    <h4 class="text-center my-4">Ajouter un restaurant</h4>
 
     <div style="text-align: center;">
         <form method="POST" th:action="@{/myFormRestaurants}" th:object="${restaurantsDto}" class="w-10/12 mx-auto flex justify-center">
@@ -21,7 +21,7 @@
             <input type="text" name="adresse" placeholder="Adresse" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
             <input type="text" name="codePostal" placeholder="CP" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
             <input type="text" name="ville" placeholder="Ville" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
-            <input type="submit" value="Enregistrer" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+            <input type="submit" value="Enregistrer" class="btn btn-primary"/>
          </form>
     </div>
 
@@ -31,11 +31,14 @@
     <div style="text-align: center;">
         <div th:each="restaurant : ${restaurantList}" class="flex justify-center">
 
-             <a th:href="@{/restaurant/{id}(id=${restaurant.id})}">
-                 <span th:text="${restaurant.nom}"> </span> <span th:text="${restaurant.getVille()}"> </span>
+             <a th:href="@{/restaurants/{id}(id=${restaurant.id})}"> <!-- Restaurant detail -->
+               Le restaurant  <span th:text="${restaurant.nom}"> de </span> <span th:text="${restaurant.getVille()}"> </span>
              </a>
+            <td><a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}" class="btn btn-primary">Modifier</a></td>
 
          </div>
+
+
      </div>
 
      <footer th:replace="~{layout :: page_footer}"></footer>

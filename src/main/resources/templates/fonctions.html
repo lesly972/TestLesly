@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: page_head}"></head>
+
+<body style="background-color: #2c2c2c; color: #ffffff;">
+
+    <nav th:replace="~{layout :: page_navbar}"></nav>
+
+    <span th:text="${notif}"></span>
+
+    <div class="container py-3">
+        <h1 class="text-center my-4">Fonctions collaborateurs chez WACDO</h1>
+    </div>
+
+    <!-- Partie qui permet d'ajouter des restaurants dans la BdD -->
+    <h4 class="text-center my-4">Ajouter un nouveau poste</h4>
+
+    <div style="text-align: center;">
+        <form method="POST" th:action="@{/myFormFonctions}" th:object="${fonctionsDto}" class="w-10/12 mx-auto flex justify-center">
+            <input type="text" name="nomDuPoste" placeholder="Nouveau poste" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+            <input type="submit" value="Enregistrer" class="btn btn-primary"/>
+         </form>
+    </div>
+
+    <!-- Partie qui liste les restaurants dans la BdD -->
+    <h4 class="text-center my-4">Liste des postes disponibles chez WACDO</h4>
+
+    <div style="text-align: center;">
+
+        <div th:each="postes : ${fonctionsList}" class="collab-card">
+
+            <!-- Lien cliquable vers la fiche individuelle -->
+            <a th:href="@{/fonctions/{id}(id=${postes.id})}">
+                <span th:text="${postes.nomDuPoste}" ></span>
+            </a>
+
+            <td> <a th:href="@{/fonctions/edit/{id}(id=${postes.id})}" class="btn btn-primary">Modifier</a> </td>
+
+        </div>
+
+    </div>
+
+
+     <footer th:replace="~{layout :: page_footer}"></footer>
+
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+ </body>
+ </html>
