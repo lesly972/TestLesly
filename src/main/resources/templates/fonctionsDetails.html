@@ -12,6 +12,9 @@
 <!-- <div th:if="${collaborateur.fonction_nomDuPoste == fonctions.nomDuPoste}">
     <p>Nom : <span th:text="${collaborateur.nom}"></span> Prénom : <span th:text="${collaborateur.prenom}"></span></p>
 </div> -->
+<p>Nom du poste : <span th:text="${fonctions.nomDuPoste}"></span></p>
+
+<p><td> <a th:href="@{/fonctions/edit/{id}(id=${fonctions.id})}" class="btn btn-primary">Modifier</a></td></p>
 
 <a href="/fonctions">⬅ Retour à la liste</a>
 

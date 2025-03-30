@@ -10,6 +10,8 @@
 
 <div class="container py-3">
     <h1 class="text-center my-4"> Restaurant <span th:if="${restaurant.nom != null}" th:text="${restaurant.nom}"> </span> </h1>
+
+    <td><a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}" class="btn btn-primary">Modifier</a></td>
 </div>
 
 <h5> Nom du restaurant : </h5> <span th:text="${restaurant.nom}"></span>

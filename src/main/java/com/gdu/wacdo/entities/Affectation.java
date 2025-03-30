@@ -14,16 +14,16 @@ public class Affectation {
     private Date dateFin;
 
     @OneToOne
-    @JoinColumn(name = "fonction_id", unique = true)
+    @JoinColumn(name = "fonctions_id", unique = true, nullable = false) // nullable = false permet de créer sans les affectations
     private Fonctions fonctions;
 
 
     @ManyToOne
-    @JoinColumn(name = "collaborateur_id")
+    @JoinColumn(name = "collaborateurs_id",nullable = false )
     private Collaborateurs collaborateurs;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id")
+    @JoinColumn(name = "restaurants_id",nullable = false)
     private Restaurants restaurants;
 
     public Affectation(Long id, Date dateDebut, Date dateFin, Fonctions fonctions, Collaborateurs collaborateurs, Restaurants restaurants) {

@@ -21,6 +21,8 @@
     <p>Travaille chez Wacdo <span th:text="${restaurants.nom}"></span> </p>
     <p>Poste chez Wacdo <span th:text="${restaurants.nom}"></span> : </p>-->
 
+    <!-- boutton pour modifier les informations du collaborateur dans une page edit -->
+    <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collaborateur.id})}" class="btn btn-primary">Modifier</a></td>
 </div>
 
 <div th:if="${collaborateur == null}">

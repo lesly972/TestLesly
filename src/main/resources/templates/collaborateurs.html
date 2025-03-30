@@ -60,10 +60,6 @@
         <a th:href="@{/collaborateurs/{id}(id=${collab.id})}">
             <span th:text="${collab.nom}" ></span> <span th:text="${collab.prenom}"></span>
         </a>
-
-        <!-- boutton pour modifier les informations du collaborateur dans une page edit -->
-        <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collab.id})}" class="btn btn-primary">Modifier</a></td>
-
     </div>
 
 </div>

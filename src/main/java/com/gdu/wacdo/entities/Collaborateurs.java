@@ -1,6 +1,9 @@
 package com.gdu.wacdo.entities;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,11 +19,14 @@ public class Collaborateurs {
     private String prenom;
     private String email;
     private String motDePasse;
+
+
     private Date datePremierEmbauche;
     private Boolean isAdministrateur;
 
+
     @OneToMany(mappedBy = "collaborateurs")
-    private List<Affectation> affectations;
+    private List<Affectation> affectations = new ArrayList<>();
 
     public Collaborateurs( String nom,String prenom, String email, String motDePasse,Date datePremierEmbauche,Boolean isAdministrateur ) {
         this.motDePasse = motDePasse;

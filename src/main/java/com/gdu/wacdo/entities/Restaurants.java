@@ -2,6 +2,8 @@ package com.gdu.wacdo.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.List;
 
 //@Data
@@ -21,7 +23,7 @@ public class Restaurants {
     private String ville;
 
     @OneToMany(mappedBy = "restaurants")
-    private List<Affectation> affectations;
+    private List<Affectation> affectations = new ArrayList<>();
 
     public Restaurants(String ville, String codePostal, String adresse, String nom) {
         this.ville = ville;
