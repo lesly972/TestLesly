@@ -16,34 +16,36 @@
 <h4 class="text-center my-4">Affecter un collaborateur</h4>
 
 <div style="text-align: center;">
-    <form method="POST" th:action="@{/myFormAffectation}" th:object="${affectationDto}" class="w-10/12 mx-auto flex justify-center">
-        <label>Collaborateur : </label>
-        <select th:field="">
-                <option></option>
+
+    <!-- @thymesVar id="affectationDto" type="com.gdu.wacdo.dtos.AffectationDto" -->
+
+    <form th:action="@{/affectation}" th:object="${affectationDto}" method="post">
+        Nom collaborateur :
+        <select th:field="*{collaborateurId}">
+            <option value="" disabled selected>Sélectionner un collaborateur</option>
+            <option th:each="c : ${collaborateurs}" th:value="${c.id}" th:text="${c.nom} + ' ' + ${c.prenom}"></option>
         </select>
 
-        <label class="form-label" for="fonction">Fonction</label>
-        <select id="fonction" name="fonction">
-            <option th:each="fonction : ${fonctions}"
-                    th:value="${fonction.id}"
-                    th:text="${fonction.nomPoste}"/>
+        Nom restaurant :
+        <select th:field="*{restaurantId}">
+            <option value="" disabled selected>Sélectionner un restaurant</option>
+            <option th:each="r : ${restaurants}" th:value="${r.id}" th:text="${r.nom}"></option>
         </select>
+
+        Nom du poste
+        <select th:field="*{fonctionId}">
+            <option value="" disabled selected>Sélectionner une fonction</option>
+            <option th:each="f : ${fonctions}" th:value="${f.id}" th:text="${f.nomDuPoste}"></option>
+        </select>
+
+        Date de début
+        <input type="date" th:field="*{dateDebut}" />
+
+        Date de fin
+        <input type="date" th:field="*{dateFin}" />
+
+        <button type="submit" class="btn btn-primary">Affecter</button>
     </form>
-</div>
-
-<!-- Partie qui liste les restaurants dans la BdD -->
-<h4 class="text-center my-4">Liste des restaurants</h4>
-
-<div style="text-align: center;">
-    <div th:each="restaurant : ${restaurantList}" class="flex justify-center">
-
-        <a th:href="@{/restaurants/{id}(id=${restaurant.id})}"> <!-- Restaurant detail -->
-            Le restaurant  <span th:text="${restaurant.nom}"> de </span> <span th:text="${restaurant.getVille()}"> </span>
-        </a>
-
-
-    </div>
-
 
 </div>
 

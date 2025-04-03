@@ -3,33 +3,56 @@ package com.gdu.wacdo.dtos;
 import com.gdu.wacdo.entities.Collaborateurs;
 import com.gdu.wacdo.entities.Fonctions;
 import com.gdu.wacdo.entities.Restaurants;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class AffectationDto {
 
-    private Date dateDebut;
-    private Date dateFin;
-
     private Long collaborateurId;
-    private Long restaurantsId;
-    private Long fonctionsId;
-    private Date dateAffectation;
+    private Long restaurantId;
+    private Long fonctionId;
 
-    public Date getDateDebut() {
-        return dateDebut;
-    }
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateDebut;
 
-    public void setDateDebut(Date dateDebut) {
-        this.dateDebut = dateDebut;
-    }
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateFin;
 
-    public Date getDateFin() {
+    public AffectationDto() {}
+
+    // Getters & Setters
+    public LocalDate getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
+    }
+
+    public LocalDate getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(LocalDate dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public Long getFonctionId() {
+        return fonctionId;
+    }
+
+    public void setFonctionId(Long fonctionId) {
+        this.fonctionId = fonctionId;
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public Long getCollaborateurId() {
@@ -38,29 +61,5 @@ public class AffectationDto {
 
     public void setCollaborateurId(Long collaborateurId) {
         this.collaborateurId = collaborateurId;
-    }
-
-    public Long getRestaurantsId() {
-        return restaurantsId;
-    }
-
-    public void setRestaurantsId(Long restaurantsId) {
-        this.restaurantsId = restaurantsId;
-    }
-
-    public Long getFonctionsId() {
-        return fonctionsId;
-    }
-
-    public void setFonctionsId(Long fonctionsId) {
-        this.fonctionsId = fonctionsId;
-    }
-
-    public Date getDateAffectation() {
-        return dateAffectation;
-    }
-
-    public void setDateAffectation(Date dateAffectation) {
-        this.dateAffectation = dateAffectation;
     }
 }
