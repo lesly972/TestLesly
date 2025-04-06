@@ -15,27 +15,27 @@ public class AffectationDto {
     private Long fonctionId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dateDebut;
+    private Date dateDebut;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dateFin;
+    private Date dateFin;
 
     public AffectationDto() {}
 
     // Getters & Setters
-    public LocalDate getDateFin() {
+    public Date getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(LocalDate dateFin) {
+    public void setDateFin(Date dateFin) {
         this.dateFin = dateFin;
     }
 
-    public LocalDate getDateDebut() {
+    public Date getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(LocalDate dateDebut) {
+    public void setDateDebut(Date dateDebut) {
         this.dateDebut = dateDebut;
     }
 

@@ -43,8 +43,8 @@ public class AffectationService {
         affectation.setCollaborateurs(collab);
         affectation.setFonctions(fonction);
         affectation.setRestaurants(restaurant);
-        affectation.setDateDebut(Date.from(dto.getDateDebut().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        affectation.setDateFin(Date.from(dto.getDateFin().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        affectation.setDateDebut(dto.getDateDebut());
+
 
         return affectationRepository.save(affectation);
     }
