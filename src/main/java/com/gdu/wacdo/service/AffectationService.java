@@ -15,6 +15,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 
@@ -48,4 +49,17 @@ public class AffectationService {
 
         return affectationRepository.save(affectation);
     }
+
+    public List<Affectation> getAllAffectations() {
+        return affectationRepository.findAll();
+    }
+
+    public Affectation getAffectationById(Long id) {
+        return affectationRepository.findById(id).orElse(null);
+    }
+
+    public List<Affectation> getAffectationsByRestaurantId(Long restaurantId) {
+        return affectationRepository.findByRestaurants_Id(restaurantId);
+    }
+
 }

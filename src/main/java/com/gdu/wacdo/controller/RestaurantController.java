@@ -1,8 +1,10 @@
 package com.gdu.wacdo.controller;
 
 import com.gdu.wacdo.dtos.RestaurantsDto;
+import com.gdu.wacdo.entities.Affectation;
 import com.gdu.wacdo.entities.Collaborateurs;
 import com.gdu.wacdo.entities.Restaurants;
+import com.gdu.wacdo.service.AffectationService;
 import com.gdu.wacdo.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,9 +24,11 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final AffectationService affectationService;
 
-    public RestaurantController(RestaurantService restaurantService) {
+    public RestaurantController(RestaurantService restaurantService, AffectationService affectationService) {
         this.restaurantService = restaurantService;
+        this.affectationService = affectationService;
     }
 
     // Défini le lien à utiliser pour afficher la page web
@@ -54,9 +58,12 @@ public class RestaurantController {
     @GetMapping("/restaurants/{id}")
     public String getRestaurantDetails(@PathVariable("id") Long id, Model model) {
         Restaurants restaurantTrouve = restaurantService.getRestaurantById(id);
+        List<Affectation> affectations = affectationService.getAffectationsByRestaurantId(id);
 
         if (restaurantTrouve != null) {
             model.addAttribute("restaurant", restaurantTrouve);
+            model.addAttribute("affectations", affectations);
+
         } else {
             model.addAttribute("notif", "Restaurant non trouvé !");
         }

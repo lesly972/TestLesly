@@ -1,6 +1,7 @@
 package com.gdu.wacdo.controller;
 
 import com.gdu.wacdo.dtos.AffectationDto;
+import com.gdu.wacdo.entities.Affectation;
 import com.gdu.wacdo.service.AffectationService;
 import com.gdu.wacdo.service.CollaborateursService;
 import com.gdu.wacdo.service.FonctionsService;
@@ -8,6 +9,8 @@ import com.gdu.wacdo.service.RestaurantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class AffectationController {
@@ -24,18 +27,29 @@ public class AffectationController {
         this.restaurantService = restaurantService;
     }
 
-    @GetMapping("/affectation")
+    @GetMapping("/affectation") //Afficher le formulaire
     public String afficherFormulaireAffectation(Model model) {
         model.addAttribute("affectationDto", new AffectationDto());
         model.addAttribute("collaborateurs", collaborateursService.getAllCollaborateurs());
         model.addAttribute("restaurants", restaurantService.getAllRestaurants());
         model.addAttribute("fonctions", fonctionsService.getAllFonctions());
+        model.addAttribute("affectationList",affectationService.getAllAffectations());
+
         return "affectation"; // ou affectation.html
     }
 
-    @PostMapping("/affectation")
-    public String creerAffectation(@ModelAttribute AffectationDto dto) {
-        affectationService.creerAffectation(dto);
-        return "redirect:/collaborateurs";
+    @GetMapping("/affectation/{id}")
+    public String afficherDetailAffectation(@PathVariable Long id, Model model) {
+        Affectation affectation = affectationService.getAffectationById(id);
+        if (affectation == null) {
+            model.addAttribute("notif", "Affectation non trouvée !");
+            return "redirect:/affectation";
+        }
+        model.addAttribute("affectation", affectation);
+        return "affectationDetails";
     }
+
+
+
+
 }

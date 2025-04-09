@@ -21,15 +21,30 @@
     <p>Travaille chez Wacdo <span th:text="${restaurants.nom}"></span> </p>
     <p>Poste chez Wacdo <span th:text="${restaurants.nom}"></span> : </p>-->
 
+    <div th:if="${affectation != null}" class="mt-4">
+
+        <h4>Affectation actuelle</h4>
+        <p><strong>Restaurant :</strong> <span th:text="${affectation.restaurants.nom}">Nom du resto</span></p>
+        <p><strong>Poste :</strong> <span th:text="${affectation.fonctions.nomDuPoste}">Nom du poste</span></p>
+        <p><strong>Date de début :</strong> <span th:text="${#dates.format(affectation.dateDebut, 'dd/MM/yyyy')}">Date</span></p>
+
+        <p th:if="${affectation.dateFin != null}">
+            <strong>Date de fin :</strong> <span th:text="${#dates.format(affectation.dateFin, 'dd/MM/yyyy')}">Date fin</span>
+        </p>
+
+    </div>
+
+
     <!-- boutton pour modifier les informations du collaborateur dans une page edit -->
     <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collaborateur.id})}" class="btn btn-primary">Modifier</a></td>
+
 </div>
 
 <div th:if="${collaborateur == null}">
     <p th:text="${notif}"></p>
 </div>
 
-<a href="/collaborateurs">⬅ Retour à la liste</a>
+<td><a href="/collaborateurs">⬅ Retour à la liste</a></td>
 
 <footer th:replace="~{layout :: page_footer}"></footer>
 

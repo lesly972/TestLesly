@@ -1,9 +1,12 @@
 package com.gdu.wacdo.controller;
 
 import com.gdu.wacdo.dtos.CollaborateursDto;
+import com.gdu.wacdo.entities.Affectation;
 import com.gdu.wacdo.entities.Collaborateurs;
 import com.gdu.wacdo.entities.Restaurants;
+import com.gdu.wacdo.service.AffectationService;
 import com.gdu.wacdo.service.CollaborateursService;
+import com.gdu.wacdo.service.FonctionsService;
 import com.gdu.wacdo.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,9 +27,15 @@ import java.util.List;
 public class CollaborateursController {
 
     public final CollaborateursService collaborateursService;
+    private final AffectationService affectationService;
+    private final RestaurantService restaurantService;
+    private final FonctionsService fonctionsService;
 
-    public CollaborateursController(CollaborateursService collaborateursService) {
+    public CollaborateursController(CollaborateursService collaborateursService, AffectationService affectationService, RestaurantService restaurantService, FonctionsService fonctionsService) {
         this.collaborateursService = collaborateursService;
+        this.affectationService = affectationService;
+        this.restaurantService = restaurantService;
+        this.fonctionsService = fonctionsService;
     }
 
     //+++++++++++++++++++++++++++++++++++++++++++++++Gestion de la page collaborateur avec le formulaire et la liste des collaborateurs++++++++++++++++++++++++++++++++++++++++++++
@@ -35,15 +44,6 @@ public class CollaborateursController {
     public String getHomePageCollaborateurs(Model model) {
         model.addAttribute("collaborateursDto", new CollaborateursDto());
         model.addAttribute("collaborateursList",collaborateursService.getAllCollaborateurs());
-
-        //List<Collaborateurs> collaborateursList = List.of(
-              //  new Collaborateurs(false,new Date(),"fafa","tt@ff.com","ffff","fdfff",1L),
-             //   new Collaborateurs(false,new Date(),"faddddfa","tadadat@ff.com","ffdadadff","fddaadfff",2L)
-      //  );
-
-       // log.info("-------------- collaborateursList for view : {}", collaborateursList);
-
-      //  model.addAttribute("collaborateursList", collaborateursList); // Pousse les infos à afficher dans le fichier html
 
         return "collaborateurs"; //Retour sur le fichier HTML collaborateur
     }
@@ -61,7 +61,7 @@ public class CollaborateursController {
     //+++++++++++++++++++++++++++++++++++++++++++++++Gestion des détails des collaborateurs++++++++++++++++++++++++++++++++++++++++++++
     @GetMapping("/collaborateurs/{id}")
     // Pathvariable récup un param de l'url
-  public String getCollaborateurDetails(@PathVariable("id") Long id, Model model) {
+    public String getCollaborateurDetails(@PathVariable("id") Long id, Model model) {
 
         Collaborateurs collaborateurTrouve = collaborateursService.getCollabDetails(id);
         if (collaborateurTrouve != null) {
@@ -69,6 +69,10 @@ public class CollaborateursController {
         } else {
             model.addAttribute("notif", "Collaborateur non trouvé !");
         }
+
+        //Afffiche les affectation du collaborateur ( restaurant et poste)
+        Affectation affectation = affectationService.getAffectationById(id);
+        model.addAttribute("affectation", affectation);
 
         return "collaborateurDetails"; // page de détails
     }
@@ -79,6 +83,8 @@ public class CollaborateursController {
         CollaborateursDto dto = collaborateursService.getCollaborateurDto(id);
         model.addAttribute("collaborateursDto", dto);
         model.addAttribute("id", id);
+        //model.addAttribute("restaurants", restaurantService.getAllRestaurants());
+        //model.addAttribute("fonctions", fonctionsService.getAllFonctions());
         return "modifierCollaborateur";
     }
 

@@ -41,16 +41,46 @@
         Date de début
         <input type="date" th:field="*{dateDebut}" />
 
-        Date de fin
-        <input type="date" th:field="*{dateFin}" />
+        <!--  Date de fin
+          <input type="date" th:field="*{dateFin}" /> -->
 
-        <button type="submit" class="btn btn-primary">Affecter</button>
-    </form>
+          <button type="submit" class="btn btn-primary">Affecter</button>
+      </form>
+  </div>
 
-</div>
+<div class="container mt-5">
+    <h4 class="text-center mb-4">Liste des collaborateurs affectés</h4>
 
-<footer th:replace="~{layout :: page_footer}"></footer>
+    <div style="text-align: center;">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Poste</th>
+                <th>Restaurant</th>
+                <th>Date de début</th>
+            </tr>
+            </thead>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+            <tbody>
+                <tr th:each="affectationCollab : ${affectationList}">
+                    <td>
+                        <a th:href="@{/affectation/{id}(id=${affectationCollab.id})}"
+                           th:text="${affectationCollab.collaborateurs.nom}">Nom</a>
+                    </td>
+                    <td th:text="${affectationCollab.collaborateurs.prenom}">Prénom</td>
+                    <td th:text="${affectationCollab.fonctions.nomDuPoste}">Poste</td>
+                    <td th:text="${affectationCollab.restaurants.nom}">Restaurant</td>
+                    <td th:text="${#dates.format(affectationCollab.dateDebut, 'dd/MM/yyyy')}">Date</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+ </div>
+
+ <footer th:replace="~{layout :: page_footer}"></footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+   </body>
 </html>

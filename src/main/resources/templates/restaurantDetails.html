@@ -11,11 +11,45 @@
 <div class="container py-3">
     <h1 class="text-center my-4"> Restaurant <span th:if="${restaurant.nom != null}" th:text="${restaurant.nom}"> </span> </h1>
 
-    <td><a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}" class="btn btn-primary">Modifier</a></td>
+
 </div>
 
 <h5> Nom du restaurant : </h5> <span th:text="${restaurant.nom}"></span>
 <p><h5>Adresse du restaurant:</h5> <span th:text="${restaurant.adresse}"></span> <span th:text="${restaurant.codePostal} + ' ' + ${restaurant.ville}"></span></p>
+
+<h4>Collaborateurs affectés à ce restaurant</h4>
+
+<div class="mt-4" th:if="${affectations != null and !affectations.isEmpty()}">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Fonction</th>
+               <!-- <th>Date de début</th> -->
+                <!-- <th>Date de fin</th> -->
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="affectationRestaurants : ${affectations}">
+                <td th:text="${affectationRestaurants.collaborateurs.nom}">Nom</td>
+                <td th:text="${affectationRestaurants.collaborateurs.prenom}">Prénom</td>
+                <td th:text="${affectationRestaurants.fonctions.nomDuPoste}">Poste</td>
+                <!--<td th:text="${#dates.format(affectationRestaurants.dateDebut, 'dd/MM/yyyy')}">Début</td> -->
+               <!-- <td th:text="${#dates.format(affectationRestaurants.dateFin, 'dd/MM/yyyy')}">Fin</td> -->
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+<div th:if="${affectations == null or affectations.isEmpty()}">
+    <p>Aucun collaborateur n'est encore affecté à ce restaurant.</p>
+</div>
+
+<td><a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}" class="btn btn-primary">Modifier</a></td>
 
 <p><p><a href="/restaurants">⬅ Retour à la liste</a></p></p>
 
