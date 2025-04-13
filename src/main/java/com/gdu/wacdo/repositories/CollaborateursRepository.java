@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 
 public interface CollaborateursRepository extends JpaRepository<Collaborateurs, Long> {
 
+
 }

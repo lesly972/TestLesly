@@ -23,8 +23,8 @@ public class WebSecurityConfig {
 
         .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/collaborateurs/**").hasAuthority("ROLE_USER")
-                .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
+                //.requestMatchers("/collaborateurs/**").hasAuthority("ROLE_USER")
+                .requestMatchers("/restaurants/**").hasAuthority("ROLE_ADMIN")
         )
                 .formLogin(Customizer.withDefaults())
 

@@ -1,5 +1,6 @@
 package com.gdu.wacdo.configuration;
 
+import com.gdu.wacdo.entities.Collaborateurs;
 import com.gdu.wacdo.repositories.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,20 +24,20 @@ public class CustomUserDetailsService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username){
 
         //Retrouver utilisateur qui veu se connecter
-        Optional<com.gdu.wacdo.entities.User> userOpt = userRepository.findByPseudo(username);
+        Optional<Collaborateurs> userOpt = userRepository.findByPseudo(username);
 
         //Verifier
         if(userOpt.isPresent()){
-            com.gdu.wacdo.entities.User user = userOpt.get();
+            Collaborateurs user = userOpt.get();
 
             //Attribuer des rôles
-            String role = user.getAdmin() ? "ROLE_ADMIN" : "ROLE_USER";
+            String role = user.getAdministrateur() ? "ROLE_ADMIN" : "ROLE_USER";
             System.out.println("Rôle donné :" + role);
 
             // Construire
             return org.springframework.security.core.userdetails.User.builder()
-                    .username(user.getPseudo())
-                    .password(user.getPassword())
+                    .username(user.getEmail())
+                    .password(user.getMotDePasse())
                     .authorities(role)
                     .build();
         }
