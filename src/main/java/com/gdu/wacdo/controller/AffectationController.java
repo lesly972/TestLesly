@@ -38,6 +38,13 @@ public class AffectationController {
         return "affectation"; // ou affectation.html
     }
 
+    @PostMapping("/affectation")
+    public String creerAffectation(@ModelAttribute AffectationDto dto) {
+        affectationService.creerAffectation(dto);
+        return "redirect:/collaborateurs";
+    }
+
+
     @GetMapping("/affectation/{id}")
     public String afficherDetailAffectation(@PathVariable Long id, Model model) {
         Affectation affectation = affectationService.getAffectationById(id);

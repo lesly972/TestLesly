@@ -1,8 +1,7 @@
 package com.gdu.wacdo.configuration;
 
 import com.gdu.wacdo.entities.Collaborateurs;
-import com.gdu.wacdo.repositories.UserRepository;
-import org.springframework.security.core.userdetails.User;
+import com.gdu.wacdo.repositories.CollaborateursRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,20 +10,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.Optional;
 
 @Service
-
 public class CustomUserDetailsService implements UserDetailsService{
 
-    private final UserRepository userRepository;
+    private final CollaborateursRepository collaborateursRepository;
 
-    public CustomUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailsService(CollaborateursRepository collaborateursRepository) {
+        this.collaborateursRepository = collaborateursRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username){
 
         //Retrouver utilisateur qui veu se connecter
-        Optional<Collaborateurs> userOpt = userRepository.findByPseudo(username);
+        Optional<Collaborateurs> userOpt = collaborateursRepository.findByEmail(username);
 
         //Verifier
         if(userOpt.isPresent()){

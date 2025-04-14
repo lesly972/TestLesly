@@ -56,7 +56,14 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="/affectation">Affecter des collaborateurs</a>
                 </li>
+
             </ul>
+
+            <!-- Bouton de deconnexion sur toute les pages HTML -->
+            <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
+            <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            </form>
 
         </div>
     </div>

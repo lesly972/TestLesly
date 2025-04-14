@@ -2,6 +2,7 @@ package com.gdu.wacdo.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -23,8 +24,13 @@ public class WebSecurityConfig {
 
         .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/").permitAll()
-                //.requestMatchers("/collaborateurs/**").hasAuthority("ROLE_USER")
+                .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/restaurants/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/collaborateurs/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/fonctions/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/affectation/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST,"/affectation").hasAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated()
         )
                 .formLogin(Customizer.withDefaults())
 
@@ -45,7 +51,6 @@ public class WebSecurityConfig {
     public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

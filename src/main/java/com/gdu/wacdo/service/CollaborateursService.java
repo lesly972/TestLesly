@@ -5,6 +5,7 @@ import com.gdu.wacdo.entities.Collaborateurs;
 import com.gdu.wacdo.entities.Restaurants;
 import com.gdu.wacdo.repositories.CollaborateursRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,13 +18,16 @@ public class CollaborateursService {
 
     private final CollaborateursRepository collaborateursRepository;
 
-    public CollaborateursService(CollaborateursRepository collaborateursRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public CollaborateursService(CollaborateursRepository collaborateursRepository, PasswordEncoder passwordEncoder) {
         this.collaborateursRepository = collaborateursRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Collaborateurs saveCollaborateurs(CollaborateursDto dto){
         //création d'une antité vide
-        Collaborateurs collaborateurs = new Collaborateurs(dto.getNom(),dto.getPrenom(),dto.getEmail(),dto.getMotDePasse(),dto.getDatePremierEmbauche(),dto.getAdministrateur());
+        Collaborateurs collaborateurs = new Collaborateurs(dto.getNom(),dto.getPrenom(),dto.getEmail(),passwordEncoder.encode(dto.getMotDePasse()),dto.getDatePremierEmbauche(),dto.getAdministrateur());
         try {
             return collaborateursRepository.save(collaborateurs);
         } catch (Exception e) {
