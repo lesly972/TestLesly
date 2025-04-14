@@ -56,6 +56,34 @@ public class AffectationController {
         return "affectationDetails";
     }
 
+    @GetMapping("/affectation/modifier/{id}")
+    public String afficherFormulaireModification(@PathVariable Long id, Model model) {
+        Affectation affectation = affectationService.getAffectationById(id);
+        if (affectation == null) {
+            model.addAttribute("notif", "Affectation non trouvée !");
+            return "redirect:/collaborateurs";
+        }
+
+        AffectationDto dto = new AffectationDto();
+        dto.setCollaborateurId(affectation.getCollaborateurs().getId());
+        dto.setRestaurantId(affectation.getRestaurants().getId());
+        dto.setFonctionId(affectation.getFonctions().getId());
+        dto.setDateDebut(affectation.getDateDebut());
+        dto.setDateFin(affectation.getDateFin());
+
+        model.addAttribute("affectationId", affectation.getId());
+        model.addAttribute("affectationDto", dto);
+        model.addAttribute("restaurants", restaurantService.getAllRestaurants());
+        model.addAttribute("fonctions", fonctionsService.getAllFonctions());
+
+        return "modifierAffectation"; // nouveau fichier HTML
+    }
+
+    @PostMapping("/affectation/modifier/{id}")
+    public String modifierAffectation(@PathVariable Long id, @ModelAttribute AffectationDto dto) {
+        affectationService.modifierAffectation(id, dto);
+        return "redirect:/collaborateurs/" + dto.getCollaborateurId();
+    }
 
 
 

@@ -66,6 +66,8 @@ public class CollaborateursController {
         Collaborateurs collaborateurTrouve = collaborateursService.getCollabDetails(id);
         if (collaborateurTrouve != null) {
             model.addAttribute("collaborateur", collaborateurTrouve);
+            List<Affectation> historique = affectationService.getHistoriqueAffectationsParCollaborateur(id);
+            model.addAttribute("historique", historique);
         } else {
             model.addAttribute("notif", "Collaborateur non trouvé !");
         }

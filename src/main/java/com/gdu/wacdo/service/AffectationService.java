@@ -62,4 +62,20 @@ public class AffectationService {
         return affectationRepository.findByRestaurants_Id(restaurantId);
     }
 
+    public void modifierAffectation(Long id, AffectationDto dto) {
+        Affectation affectation = affectationRepository.findById(id).orElse(null);
+        if (affectation == null) return;
+
+        affectation.setDateDebut(dto.getDateDebut());
+        affectation.setDateFin(dto.getDateFin());
+
+        affectation.setFonctions(fonctionsRepository.findById(dto.getFonctionId()).orElse(null));
+        affectation.setRestaurants(restaurantsRepository.findById(dto.getRestaurantId()).orElse(null));
+        affectationRepository.save(affectation);
+    }
+
+    public List<Affectation> getHistoriqueAffectationsParCollaborateur(Long collabId) {
+        return affectationRepository.findByCollaborateurs_IdOrderByDateDebutDesc(collabId);
+    }
+
 }

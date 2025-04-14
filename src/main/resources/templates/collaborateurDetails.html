@@ -14,8 +14,11 @@
     <p>Date d'embauche : <span th:text="${collaborateur.datePremierEmbauche}"></span></p>
     <p>Administrateur : <span th:text="${collaborateur.administrateur ? 'Oui' : 'Non'}"></span></p>
 
-    <!--Mot de passe à Crypter pour afficher ou ajouter un changement de mot de passe selon les droits utilisateurs -->
-    <p>Mot de passe : <span th:text="${collaborateur.motDePasse}"></span></p>
+    <!--Mot de passe à Crypter pour afficher ou ajouter un changement de mot de passe selon les droits utilisateurs
+    <p>Mot de passe : <span th:text="${collaborateur.motDePasse}"></span></p>-->
+
+    <!-- boutton pour modifier les informations du collaborateur dans une page edit -->
+    <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collaborateur.id})}" class="btn btn-primary">Modifier information collaborateur</a></td>
 
     <!-- Information sur le restaurant du collaborateur
     <p>Travaille chez Wacdo <span th:text="${restaurants.nom}"></span> </p>
@@ -28,15 +31,34 @@
         <p><strong>Poste :</strong> <span th:text="${affectation.fonctions.nomDuPoste}">Nom du poste</span></p>
         <p><strong>Date de début :</strong> <span th:text="${#dates.format(affectation.dateDebut, 'dd/MM/yyyy')}">Date</span></p>
 
+        <!-- affiche la date de fin uniquement si il y a une date de fin -->
         <p th:if="${affectation.dateFin != null}">
             <strong>Date de fin :</strong> <span th:text="${#dates.format(affectation.dateFin, 'dd/MM/yyyy')}">Date fin</span>
         </p>
 
+        <a th:href="@{/affectation/modifier/{id}(id=${affectation.id})}" class="btn btn-primary">Modifier l'affectation</a>
+
     </div>
 
-
-    <!-- boutton pour modifier les informations du collaborateur dans une page edit -->
-    <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collaborateur.id})}" class="btn btn-primary">Modifier</a></td>
+    <h4 class="mt-5">Historique des affectations</h4>
+    <table class="table table-striped text-white">
+        <thead>
+        <tr>
+            <th>Restaurant</th>
+            <th>Poste</th>
+            <th>Date de début</th>
+            <th>Date de fin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${historique}">
+            <td th:text="${a.restaurants.nom}">Nom Resto</td>
+            <td th:text="${a.fonctions.nomDuPoste}">Poste</td>
+            <td th:text="${#dates.format(a.dateDebut, 'dd/MM/yyyy')}">Début</td>
+            <td th:text="${a.dateFin != null ? #dates.format(a.dateFin, 'dd/MM/yyyy') : 'En cours'}">Fin</td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 
