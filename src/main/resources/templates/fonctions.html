@@ -9,7 +9,7 @@
     <span th:text="${notif}"></span>
 
     <div class="container py-3">
-        <h1 class="text-center my-4">Fonctions collaborateurs chez WACDO</h1>
+        <h1 class="text-center my-4" style="color: #d3c3a7;">Fonctions collaborateurs chez WACDO</h1>
     </div>
 
     <!-- Partie qui permet d'ajouter des restaurants dans la BdD -->
@@ -17,7 +17,7 @@
 
     <div style="text-align: center;">
         <form method="POST" th:action="@{/myFormFonctions}" th:object="${fonctionsDto}" class="w-10/12 mx-auto flex justify-center">
-            <input type="text" name="nomDuPoste" placeholder="Nouveau poste" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12"/>
+            <input type="text" name="nomDuPoste" placeholder="Nouveau poste" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12" required/>
             <input type="submit" value="Enregistrer" class="btn btn-primary"/>
          </form>
     </div>

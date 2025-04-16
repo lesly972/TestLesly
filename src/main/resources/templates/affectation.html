@@ -9,78 +9,122 @@
 <span th:text="${notif}"></span>
 
 <div class="container py-3">
-    <h1 class="text-center my-4">Affectation collaborateurs WACDO</h1>
+    <h1 class="text-center my-4" style="color: #d3c3a7;">Affectation collaborateurs WACDO</h1>
 </div>
 
-<!-- Partie qui permet d'ajouter des restaurants dans la BdD -->
 <h4 class="text-center my-4">Affecter un collaborateur</h4>
 
 <div style="text-align: center;">
 
-    <!-- @thymesVar id="affectationDto" type="com.gdu.wacdo.dtos.AffectationDto" -->
+    <div th:if="${messageErreur != null}" class="alert alert-danger">
+        <p th:text="${messageErreur}"></p>
+    </div>
+
+    <!-- <p>DEBUG (taille fonctions déjà prises) : <span th:if="${combinaisonsActives != null}" th:text="${#lists.size(combinaisonsActives)}">0</span></p> -->
 
     <form th:action="@{/affectation}" th:object="${affectationDto}" method="post">
+
         Nom collaborateur :
-        <select th:field="*{collaborateurId}">
-            <option value="" disabled selected>Sélectionner un collaborateur</option>
-            <option th:each="c : ${collaborateurs}" th:value="${c.id}" th:text="${c.nom} + ' ' + ${c.prenom}"></option>
+        <select th:field="*{collaborateurId}" name="collaborateurId" required>
+            <option th:each="c : ${collaborateurs}"
+                    th:value="${c.id}"
+                    th:text="${c.nom + ' ' + c.prenom}">
+            </option>
         </select>
 
         Nom restaurant :
-        <select th:field="*{restaurantId}">
-            <option value="" disabled selected>Sélectionner un restaurant</option>
-            <option th:each="r : ${restaurants}" th:value="${r.id}" th:text="${r.nom}"></option>
+        <select th:field="*{restaurantId}" name="restaurantId" required>
+            <option th:each="r : ${restaurants}"
+                    th:value="${r.id}"
+                    th:text="${r.nom}">
+            </option>
         </select>
 
-        Nom du poste
-        <select th:field="*{fonctionId}">
+        Nom du poste :
+        <select th:field="*{fonctionId}" name="fonctionId" required>
             <option value="" disabled selected>Sélectionner une fonction</option>
-            <option th:each="f : ${fonctions}" th:value="${f.id}" th:text="${f.nomDuPoste}"></option>
+            <option th:each="f : ${fonctions}"
+                    th:value="${f.id}"
+                    th:text="${f.nomDuPoste}">
+            </option>
         </select>
 
-        Date de début
-        <input type="date" th:field="*{dateDebut}" />
+        Date de début :
+        <input type="date" th:field="*{dateDebut}" required/>
 
-        <!--  Date de fin
-          <input type="date" th:field="*{dateFin}" /> -->
-
-          <button type="submit" class="btn btn-primary">Affecter</button>
-      </form>
-  </div>
+        <button type="submit" class="btn btn-primary">Affecter</button>
+    </form>
+</div>
 
 <div class="container mt-5">
-    <h4 class="text-center mb-4">Liste des collaborateurs affectés</h4>
+    <h4 class="text-center mb-4">Liste des affectations</h4>
 
     <div style="text-align: center;">
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Poste</th>
-                <th>Restaurant</th>
-                <th>Date de début</th>
-            </tr>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Poste</th>
+                    <th>Restaurant</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                </tr>
             </thead>
 
             <tbody>
                 <tr th:each="affectationCollab : ${affectationList}">
-                    <td>
-                        <a th:href="@{/affectation/{id}(id=${affectationCollab.id})}"
-                           th:text="${affectationCollab.collaborateurs.nom}">Nom</a>
-                    </td>
-                    <td th:text="${affectationCollab.collaborateurs.prenom}">Prénom</td>
-                    <td th:text="${affectationCollab.fonctions.nomDuPoste}">Poste</td>
-                    <td th:text="${affectationCollab.restaurants.nom}">Restaurant</td>
-                    <td th:text="${#dates.format(affectationCollab.dateDebut, 'dd/MM/yyyy')}">Date</td>
+                    <div class="mt-4" th:if="${affectationCollab.dateFin == null}">
+                        <!-- <td>
+                            <a th:href="@{/collaborateurs/{id}(id=${affectationCollab.id})}"
+                               th:text="${affectationCollab.collaborateurs.nom}">Nom</a>
+                        </td> -->
+                        <td th:text="${affectationCollab.collaborateurs.nom}">Nom</td>
+                        <td th:text="${affectationCollab.collaborateurs.prenom}">Prénom</td>
+                        <td th:text="${affectationCollab.fonctions.nomDuPoste}">Poste</td>
+                        <td th:text="${affectationCollab.restaurants.nom}">Restaurant</td>
+                        <td th:text="${#dates.format(affectationCollab.dateDebut, 'dd/MM/yyyy')}">Date</td>
+                       <!-- <td th:text="${#dates.format(affectationCollab.dateFin, 'dd/MM/yyyy')}">Datefin</td> -->
+                        <td th:text="${affectationCollab.dateFin != null ? #dates.format(affectationCollab.dateFin, 'dd/MM/yyyy') : 'En poste dans le restaurant'}">Fin</td>
+                    </div>
                 </tr>
             </tbody>
         </table>
     </div>
- </div>
+</div>
 
- <footer th:replace="~{layout :: page_footer}"></footer>
+<footer th:replace="~{layout :: page_footer}"></footer>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-   </body>
+    <!-- scripts -->
+
+<script th:inline="javascript">
+    const combinaisonsActives = /*[[${combinaisonsActives}]]*/ [];
+
+    const collaborateurSelect = document.querySelector('select[name="collaborateurId"]');
+    const restaurantSelect = document.querySelector('select[name="restaurantId"]');
+    const fonctionSelect = document.querySelector('select[name="fonctionId"]');
+
+    function updateFonctionsDisponibles() {
+        console.log(" JS actif : updateFonctionsDisponibles exécuté !");
+        const collabId = collaborateurSelect.value;
+        const restoId = restaurantSelect.value;
+        const key = `${collabId}-${restoId}`; // ️ correspond à la structure des clés côté backend
+
+        const griser = combinaisonsActives.includes(key);
+
+        Array.from(fonctionSelect.options).forEach(option => {
+            if (option.value !== "") {
+                option.disabled = griser;
+            }
+        });
+    }
+
+    collaborateurSelect.addEventListener('change', updateFonctionsDisponibles);
+    restaurantSelect.addEventListener('change', updateFonctionsDisponibles);
+    window.addEventListener('DOMContentLoaded', updateFonctionsDisponibles);
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
 </html>

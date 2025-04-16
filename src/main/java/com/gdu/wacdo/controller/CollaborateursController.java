@@ -73,7 +73,7 @@ public class CollaborateursController {
         }
 
         //Afffiche les affectation du collaborateur ( restaurant et poste)
-        Affectation affectation = affectationService.getAffectationById(id);
+        Affectation affectation = affectationService.getDerniereAffectation(id);
         model.addAttribute("affectation", affectation);
 
         return "collaborateurDetails"; // page de détails

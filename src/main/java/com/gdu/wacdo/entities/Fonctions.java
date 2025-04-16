@@ -14,8 +14,8 @@ public class Fonctions {
 
     private String nomDuPoste;
 
-    @OneToOne(mappedBy = "fonctions")
-    private Affectation affectation;
+    @OneToMany(mappedBy = "fonctions")
+    private List<Affectation> affectations;
 
     public Fonctions(String nomDuPoste){
 

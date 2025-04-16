@@ -13,16 +13,16 @@
     <div class="text-center my-4">
 
         <p><label>Nom :</label>
-        <input type="text" th:field="*{nom}" /></p>
+        <input type="text" th:field="*{nom}" required/></p>
 
         <p><label>Adresse :</label>
-        <input type="text" th:field="*{adresse}" /></p>
+        <input type="text" th:field="*{adresse}" required/></p>
 
         <p><label>Code postal :</label>
-        <input type="text" th:field="*{codePostal}" /></p>
+        <input type="text" th:field="*{codePostal}" required/></p>
 
         <p><label>Ville :</label>
-        <input type="text" th:field="*{ville}" /></p>
+        <input type="text" th:field="*{ville}" required/></p>
 
         <p><button type="submit" class="btn btn-primary" >Enregistrer</button></p>
 

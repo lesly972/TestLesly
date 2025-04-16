@@ -5,60 +5,65 @@
 
 <body  style="background-color: #2c2c2c; color: #ffffff;">
 
+<nav th:replace="~{layout :: page_navbar}"></nav>
+
+<!-- ------------------------------DETAILS DU COLLABORATEUR -------------------------------------- -->
+
 <div style="text-align: center;"> <h1>Détails du Collaborateur</h1> </div>
 
-<div th:if="${collaborateur != null}">
+<div style="text-align: center;" th:if="${collaborateur != null}">
     <p>Nom : <span th:text="${collaborateur.nom}"></span></p>
     <p>Prénom : <span th:text="${collaborateur.prenom}"></span></p>
     <p>Email : <span th:text="${collaborateur.email}"></span></p>
-    <p>Date d'embauche : <span th:text="${collaborateur.datePremierEmbauche}"></span></p>
+    <p>Date d'embauche : <span th:text="${#dates.format(collaborateur.datePremierEmbauche,'dd/MM/yyyy')}"></span></p>
     <p>Administrateur : <span th:text="${collaborateur.administrateur ? 'Oui' : 'Non'}"></span></p>
-
-    <!--Mot de passe à Crypter pour afficher ou ajouter un changement de mot de passe selon les droits utilisateurs
-    <p>Mot de passe : <span th:text="${collaborateur.motDePasse}"></span></p>-->
 
     <!-- boutton pour modifier les informations du collaborateur dans une page edit -->
     <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collaborateur.id})}" class="btn btn-primary">Modifier information collaborateur</a></td>
 
-    <!-- Information sur le restaurant du collaborateur
-    <p>Travaille chez Wacdo <span th:text="${restaurants.nom}"></span> </p>
-    <p>Poste chez Wacdo <span th:text="${restaurants.nom}"></span> : </p>-->
+    <!-- ------------------------------AFFECTATION DU COLLABORATEUR -------------------------------------- -->
+    <!-- <div style="text-align: center;" th:if="${affectation != null}" class="mt-4">
 
-    <div th:if="${affectation != null}" class="mt-4">
+        <h4 >Affectation en cour de <span th:text="${collaborateur.nom}"></span> <span th:text="${collaborateur.prenom}"></span> </h4>
 
-        <h4>Affectation actuelle</h4>
         <p><strong>Restaurant :</strong> <span th:text="${affectation.restaurants.nom}">Nom du resto</span></p>
         <p><strong>Poste :</strong> <span th:text="${affectation.fonctions.nomDuPoste}">Nom du poste</span></p>
         <p><strong>Date de début :</strong> <span th:text="${#dates.format(affectation.dateDebut, 'dd/MM/yyyy')}">Date</span></p>
 
-        <!-- affiche la date de fin uniquement si il y a une date de fin -->
-        <p th:if="${affectation.dateFin != null}">
-            <strong>Date de fin :</strong> <span th:text="${#dates.format(affectation.dateFin, 'dd/MM/yyyy')}">Date fin</span>
-        </p>
+    </div> -->
 
-        <a th:href="@{/affectation/modifier/{id}(id=${affectation.id})}" class="btn btn-primary">Modifier l'affectation</a>
+    <!-- ------------------------------HISTORIQUE DES AFFECTATION DU COLLABORATEUR -------------------------------------- -->
 
+    <div style="text-align: center;" th:if="${affectation != null}" class="mt-4">
+
+        <a th:href="@{/affectation/modifier/{id}(id=${affectation.id})}" class="btn btn-primary">Modifier une affectation</a>
+
+        <h4 style="text-align: center;" class="mt-5">Historique des affectations de <span th:text="${collaborateur.nom}"></span> <span th:text="${collaborateur.prenom}"></span></h4>
+
+        <table class="table table-striped text-white">
+            <thead>
+                <tr>
+                    <th>Restaurant</th>
+                    <th>Poste</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="affectationHistorique : ${historique}">
+                    <td th:text="${affectationHistorique.restaurants.nom}">Nom Resto</td>
+                    <td th:text="${affectationHistorique.fonctions.nomDuPoste}">Poste</td>
+                    <td th:text="${#dates.format(affectationHistorique.dateDebut, 'dd/MM/yyyy')}">Début</td>
+                    <td th:text="${affectationHistorique.dateFin != null ? #dates.format(affectationHistorique.dateFin, 'dd/MM/yyyy') : 'En poste dans le restaurant'}">Fin</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <h4 class="mt-5">Historique des affectations</h4>
-    <table class="table table-striped text-white">
-        <thead>
-        <tr>
-            <th>Restaurant</th>
-            <th>Poste</th>
-            <th>Date de début</th>
-            <th>Date de fin</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="a : ${historique}">
-            <td th:text="${a.restaurants.nom}">Nom Resto</td>
-            <td th:text="${a.fonctions.nomDuPoste}">Poste</td>
-            <td th:text="${#dates.format(a.dateDebut, 'dd/MM/yyyy')}">Début</td>
-            <td th:text="${a.dateFin != null ? #dates.format(a.dateFin, 'dd/MM/yyyy') : 'En cours'}">Fin</td>
-        </tr>
-        </tbody>
-    </table>
+    <div style="text-align: center;" th:if="${affectation == null}" class="mt-4">
+        Aucune Affectation
+    </div>
 
 </div>
 

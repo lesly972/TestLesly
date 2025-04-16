@@ -19,27 +19,24 @@
     <div class="text-center my-4">
 
         <p><label>Nom :</label>
-        <input type="text" th:field="*{nom}" /></p>
+        <input type="text" th:field="*{nom}" required/></p>
 
         <p><label>Prénom :</label>
-        <input type="text" th:field="*{prenom}" /></p>
+        <input type="text" th:field="*{prenom}" required/></p>
 
         <p><label>Email :</label>
-        <input type="email" th:field="*{email}" /></p>
+        <input type="email" th:field="*{email}" required/></p>
 
         <p><label>Mot de passe :</label>
         <input type="password" th:field="*{motDePasse}" /></p>
 
         <p><label>Date d'embauche :</label>
-        <input type="date" th:field="*{datePremierEmbauche}" /></p>
+        <input type="date" th:field="*{datePremierEmbauche}" required/></p>
 
         <p><label>Administrateur :</label>
-        <input type="checkbox" th:field="*{administrateur}" /></p>
+        <input type="checkbox" th:field="*{administrateur}" required/></p>
 
         <p><button type="submit" class="btn btn-primary">Enregistrer</button></p>
-
-        <hr class="my-4">
-        <h4>Modification de l'affectation</h4>
 
     </div>
 

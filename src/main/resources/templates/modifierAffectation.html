@@ -15,16 +15,19 @@
     <h2 class="mb-4 text-center">Modifier affectation </h2>
 
     <form th:action="@{/affectation/modifier/{id}(id=${affectationId})}" th:object="${affectationDto}" method="post">
+        <!-- <p>DEBUG RestaurantNom : <span th:text="${restaurantNom}">[non trouvé]</span></p> -->
+
         <div class="mb-3">
-            <label class="form-label">Restaurant :</label>
+            <label class="form-label">Restaurant affecté :</label>
             <select class="form-select" th:field="*{restaurantId}" required>
-                <option th:each="r : ${restaurants}" th:value="${r.id}" th:text="${r.nom}"
+                <option th:each="r : ${restaurantsAffectes}" th:value="${r.id}" th:text="${r.nom}"
                         th:selected="${r.id == affectationDto.restaurantId}"></option>
             </select>
         </div>
 
+
         <div class="mb-3">
-            <label class="form-label">Poste :</label>
+            <label class="form-label">Poste disponible :</label>
             <select class="form-select" th:field="*{fonctionId}" required>
                 <option th:each="f : ${fonctions}" th:value="${f.id}" th:text="${f.nomDuPoste}"
                         th:selected="${f.id == affectationDto.fonctionId}"></option>
@@ -32,14 +35,10 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Date de début :</label>
+            <label class="form-label">Date de début du nouveau poste :</label>
             <input type="date" class="form-control" th:field="*{dateDebut}" required />
         </div>
 
-        <div class="mb-3">
-            <label  class="form-label">Date de fin :</label>
-            <input type="date" class="form-control" th:field="*{dateFin}" />
-        </div>
 
         <input type="hidden" th:field="*{collaborateurId}" />
 

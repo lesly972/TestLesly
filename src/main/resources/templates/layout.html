@@ -59,11 +59,18 @@
 
             </ul>
 
-            <!-- Bouton de deconnexion sur toute les pages HTML -->
-            <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
-            <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-            </form>
+            <!-- Bouton de déconnexion (affiché uniquement si l'utilisateur est connecté) -->
+            <div th:if="${#authorization.expression('isAuthenticated()')}">
+                <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
+                <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                </form>
+            </div>
+
+            <!-- Bouton de connexion (affiché uniquement si l'utilisateur est déconnecté) -->
+            <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                <a class="nav-link text-dark" th:href="@{/login}">Connexion admin</a>
+            </div>
 
         </div>
     </div>

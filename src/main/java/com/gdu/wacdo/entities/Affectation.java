@@ -5,7 +5,12 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+//@Table(
+       // name = "affectation",
+      //  uniqueConstraints = @UniqueConstraint(columnNames = {"collaborateurs_id", "restaurants_id"})
+//)
 public class Affectation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,17 +18,16 @@ public class Affectation {
     private Date dateDebut;
     private Date dateFin;
 
-    @OneToOne
-    @JoinColumn(name = "fonctions_id", unique = true, nullable = false) // nullable = false permet de créer sans les affectations
+    @ManyToOne
+    @JoinColumn(name = "fonctions_id", nullable = false)
     private Fonctions fonctions;
 
-
     @ManyToOne
-    @JoinColumn(name = "collaborateurs_id",nullable = false )
+    @JoinColumn(name = "collaborateurs_id", nullable = false)
     private Collaborateurs collaborateurs;
 
     @ManyToOne
-    @JoinColumn(name = "restaurants_id",nullable = false)
+    @JoinColumn(name = "restaurants_id", nullable = false)
     private Restaurants restaurants;
 
     public Affectation(Long id, Date dateDebut, Date dateFin, Fonctions fonctions, Collaborateurs collaborateurs, Restaurants restaurants) {
