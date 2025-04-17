@@ -23,14 +23,14 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
 
         .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**").permitAll()
-                //.requestMatchers("/images/**").permitAll()
-                //.requestMatchers("/restaurants/**").hasAuthority("ROLE_ADMIN")
-                //.requestMatchers("/collaborateurs/**").hasAuthority("ROLE_ADMIN")
-                //.requestMatchers("/fonctions/**").hasAuthority("ROLE_ADMIN")
-                //.requestMatchers("/affectation/**").hasAuthority("ROLE_ADMIN")
-                //.requestMatchers(HttpMethod.POST,"/affectation").hasAuthority("ROLE_ADMIN")
-                //.anyRequest().authenticated()
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/images/**").permitAll()
+                .requestMatchers("/restaurants/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/collaborateurs/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/fonctions/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/affectation/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST,"/affectation").hasAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated()
         )
                 .formLogin(Customizer.withDefaults())
 
