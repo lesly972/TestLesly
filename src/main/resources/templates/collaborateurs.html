@@ -16,17 +16,17 @@
 
 <div style="text-align: center;">
     <form method="POST" th:action="@{/myFormCollaborateurs}" th:object="${collaborateursDto}" class="w-10/12 mx-auto flex justify-center">
-        <input type="text" name="nom" placeholder="Nom du collaborateur" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12" required/>
-        <input type="text" name="prenom" placeholder="Prénom du collaborateur" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12" required/>
-        <input type="email" name="email" placeholder="Adresse Mail" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12" required/>
-        <input type="password" name="motDePasse" placeholder="Mot de Passe" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12" required/>
-        <input type="date" name="datePremierEmbauche" placeholder="Date Premier Embauche" class="border border-gray-300 text-gray-900 text-sm rounded-lg w-3/12" required/>
+        <input type="text" name="nom" placeholder="Nom du collaborateur" class="btn btn-light mb-2" required/>
+        <input type="text" name="prenom" placeholder="Prénom du collaborateur" class="btn btn-light mb-2" required/>
+        <input type="email" name="email" placeholder="Adresse Mail" class="btn btn-light mb-2" required/>
+        <input type="password" name="motDePasse" placeholder="Mot de Passe" class="btn btn-light mb-2" required/>
+        <input type="date" name="datePremierEmbauche" placeholder="Date Premier Embauche" class="btn btn-light mb-2" required/>
 
         <span>Administrateur :</span>
         <input type="radio" th:field="*{administrateur}" value="true" required/> Oui
         <input type="radio" th:field="*{administrateur}" value="false" required/> Non
 
-        <input type="submit" value="Enregistrer" class="btn btn-primary"/>
+        <input type="submit" value="Enregistrer" class="btn btn-primary mn-2"/>
     </form>
 </div>
 

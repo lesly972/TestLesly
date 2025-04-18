@@ -25,7 +25,7 @@
     <form th:action="@{/affectation}" th:object="${affectationDto}" method="post">
 
         Nom collaborateur :
-        <select th:field="*{collaborateurId}" name="collaborateurId" required>
+        <select th:field="*{collaborateurId}" name="collaborateurId" class="btn btn-light mb-2" required>
             <option th:each="c : ${collaborateurs}"
                     th:value="${c.id}"
                     th:text="${c.nom + ' ' + c.prenom}">
@@ -33,7 +33,7 @@
         </select>
 
         Nom restaurant :
-        <select th:field="*{restaurantId}" name="restaurantId" required>
+        <select th:field="*{restaurantId}" name="restaurantId" class="btn btn-light mb-2" required>
             <option th:each="r : ${restaurants}"
                     th:value="${r.id}"
                     th:text="${r.nom}">
@@ -41,7 +41,7 @@
         </select>
 
         Nom du poste :
-        <select th:field="*{fonctionId}" name="fonctionId" required>
+        <select th:field="*{fonctionId}" name="fonctionId" class="btn btn-light mb-2" required>
             <option value="" disabled selected>Sélectionner une fonction</option>
             <option th:each="f : ${fonctions}"
                     th:value="${f.id}"
@@ -50,9 +50,9 @@
         </select>
 
         Date de début :
-        <input type="date" th:field="*{dateDebut}" required/>
+        <input type="date" th:field="*{dateDebut}" class="btn btn-light mb-2" required/>
 
-        <button type="submit" class="btn btn-primary">Affecter</button>
+        <button type="submit" class="btn btn-primary mb-2">Affecter</button>
     </form>
 </div>
 
@@ -84,7 +84,6 @@
                         <td th:text="${affectationCollab.fonctions.nomDuPoste}">Poste</td>
                         <td th:text="${affectationCollab.restaurants.nom}">Restaurant</td>
                         <td th:text="${#dates.format(affectationCollab.dateDebut, 'dd/MM/yyyy')}">Date</td>
-                       <!-- <td th:text="${#dates.format(affectationCollab.dateFin, 'dd/MM/yyyy')}">Datefin</td> -->
                         <td th:text="${affectationCollab.dateFin != null ? #dates.format(affectationCollab.dateFin, 'dd/MM/yyyy') : 'En poste dans le restaurant'}">Fin</td>
                     </div>
                 </tr>
@@ -96,7 +95,6 @@
 <footer th:replace="~{layout :: page_footer}"></footer>
 
     <!-- scripts -->
-
 <script th:inline="javascript">
     const combinaisonsActives = /*[[${combinaisonsActives}]]*/ [];
 
