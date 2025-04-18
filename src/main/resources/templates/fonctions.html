@@ -25,17 +25,14 @@
     <!-- Partie qui liste les restaurants dans la BdD -->
     <h4 class="text-center my-4">Liste des postes disponibles chez WACDO</h4>
 
-    <div style="text-align: center;">
-
-        <div th:each="postes : ${fonctionsList}" class="collab-card">
-
-            <!-- Lien cliquable vers la fiche individuelle -->
-            <a th:href="@{/fonctions/{id}(id=${postes.id})}">
-                <span th:text="${postes.nomDuPoste}" ></span>
-            </a>
-
+    <div class="d-flex justify-content-center">
+        <div th:each="postes : ${fonctionsList}" class="collab-card" style="width: max-content;">
+            <ul class="list-group">
+                <a th:href="@{/fonctions/{id}(id=${postes.id})}" class="list-group-item list-group-item-action">
+                    <span th:text="${postes.nomDuPoste}" ></span>
+                </a>
+            </ul>
         </div>
-
     </div>
 
 

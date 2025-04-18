@@ -34,16 +34,14 @@
     <h4 class="text-center my-4">Liste collaborateurs WACDO</h4>
 </div>
 
-<div style="text-align: center;">
-
-    <div th:each="collab : ${collaborateursList}" class="collab-card">
-
-        <!-- Lien cliquable vers la fiche individuelle -->
-        <a th:href="@{/collaborateurs/{id}(id=${collab.id})}">
-            <span th:text="${collab.nom}" ></span> <span th:text="${collab.prenom}"></span>
-        </a>
+<div class="d-flex justify-content-center">
+    <div th:each="collab : ${collaborateursList}" class="collab-card" style="width: max-content;">
+        <ul class="list-group">
+            <a th:href="@{/collaborateurs/{id}(id=${collab.id})}" class="list-group-item">
+                <span th:text="${collab.nom}"></span> <span th:text="${collab.prenom}"></span>
+            </a>
+        </ul>
     </div>
-
 </div>
 
 <footer th:replace="~{layout :: page_footer}"></footer>

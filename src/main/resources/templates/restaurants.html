@@ -27,15 +27,15 @@
 
     <!-- Partie qui liste les restaurants dans la BdD -->
     <h4 class="text-center my-4">Liste des restaurants</h4>
-
-    <div style="text-align: center;">
-        <div th:each="restaurant : ${restaurantList}" class="flex justify-center">
+    
+    <div class="d-flex justify-content-center">
+        <div th:each="restaurant : ${restaurantList}" class="collab-card" style="width: max-content;">
             <ul class="list-group">
-                 <a th:href="@{/restaurants/{id}(id=${restaurant.id})}" class="list-group-item list-group-item-action"> <!-- Restaurant detail -->
-                   Le restaurant <span th:text="${restaurant.nom}"> </span> de <span th:text="${restaurant.getVille()}"> </span>
-                 </a>
+                <a th:href="@{/restaurants/{id}(id=${restaurant.id})}" class="list-group-item list-group-item-action">
+                    Le restaurant <span th:text="${restaurant.nom}"> </span> de <span th:text="${restaurant.getVille()}"> </span>
+                </a>
             </ul>
-         </div>
+        </div>
     </div>
 
      <footer th:replace="~{layout :: page_footer}"></footer>
