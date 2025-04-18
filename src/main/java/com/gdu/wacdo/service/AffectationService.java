@@ -173,5 +173,19 @@ public class AffectationService {
         }
     }
 
+    public List<Collaborateurs> getCollaborateursSansAffectation() {
+        List<Collaborateurs> tous = collaborateursRepository.findAll();
+        List<Long> idsAffectes = affectationRepository.findAll().stream()
+                .filter(a -> a.getDateFin() == null)
+                .map(a -> a.getCollaborateurs().getId())
+                .distinct()
+                .toList();
+
+        return tous.stream()
+                .filter(c -> !idsAffectes.contains(c.getId()))
+                .toList();
+    }
+
+
 
 }

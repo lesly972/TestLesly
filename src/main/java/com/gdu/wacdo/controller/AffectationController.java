@@ -4,6 +4,7 @@ package com.gdu.wacdo.controller;
 // Importation des classes nécessaires (DTOs, entités, services)
 import com.gdu.wacdo.dtos.AffectationDto;
 import com.gdu.wacdo.entities.Affectation;
+import com.gdu.wacdo.entities.Collaborateurs;
 import com.gdu.wacdo.entities.Restaurants;
 import com.gdu.wacdo.service.AffectationService;
 import com.gdu.wacdo.service.CollaborateursService;
@@ -71,7 +72,9 @@ public class AffectationController {
                 .toList();
         model.addAttribute("combinaisonsActives", combinaisonsActives);
 
-
+        // Liste des collaborateurs sans affectation active
+        List<Collaborateurs> sansAffectation = affectationService.getCollaborateursSansAffectation();
+        model.addAttribute("collaborateursSansAffectation", sansAffectation);
 
         return "affectation";
     }

@@ -92,6 +92,19 @@
     </div>
 </div>
 
+<h4 class="text-center my-4">Collaborateurs sans affectation</h4>
+
+<div class="d-flex justify-content-center flex-wrap gap-3">
+    <div th:each="collab : ${collaborateursSansAffectation}" class="collab-card" style="width: max-content;">
+        <ul class="list-group">
+            <a th:href="@{/collaborateurs/{id}(id=${collab.id})}" class="list-group-item">
+                <span th:text="${collab.nom}"></span> <span th:text="${collab.prenom}"></span>
+            </a>
+        </ul>
+    </div>
+</div>
+
+
 <footer th:replace="~{layout :: page_footer}"></footer>
 
     <!-- scripts -->
