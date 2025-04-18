@@ -9,13 +9,13 @@
 
 <!-- ------------------------------DETAILS DU COLLABORATEUR -------------------------------------- -->
 
-<div style="text-align: center;"> <h1>Détails du Collaborateur</h1> </div>
+<div style="text-align: center;"> <h1 style="color: #d3c3a7;">Détails du Collaborateur <span th:text="${collaborateur.nom}"></span></p></h1> </div>
 
 <div style="text-align: center;" th:if="${collaborateur != null}">
     <p>Nom : <span th:text="${collaborateur.nom}"></span></p>
     <p>Prénom : <span th:text="${collaborateur.prenom}"></span></p>
     <p>Email : <span th:text="${collaborateur.email}"></span></p>
-    <p>Date d'embauche : <span th:text="${#dates.format(collaborateur.datePremierEmbauche,'dd/MM/yyyy')}"></span></p>
+    <p>Date d'embauche : <span th:text="${#dates.format(collaborateur.datePremierEmbauche, 'dd/MM/yyyy')}"></span></p>
     <p>Administrateur : <span th:text="${collaborateur.administrateur ? 'Oui' : 'Non'}"></span></p>
 
     <!-- boutton pour modifier les informations du collaborateur dans une page edit -->

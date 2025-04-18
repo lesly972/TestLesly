@@ -6,25 +6,25 @@
 <nav th:replace="~{layout :: page_navbar}"></nav>
 
 <!-- Partie qui permet d'ajouter des collaborateurs dans la BdD -->
-<h1 class="text-center my-4">Modifications informations</h1>
+<h1 class="text-center my-4" style="color: #d3c3a7;">Modification des informations</h1>
 
 <form th:action="@{/restaurants/edit/{id}(id=${id})}" th:object="${restaurantsDto}" method="post">
 
     <div class="text-center my-4">
 
         <p><label>Nom :</label>
-        <input type="text" th:field="*{nom}" required/></p>
+        <input type="text" th:field="*{nom}" class="btn btn-light mb-2" required/></p>
 
         <p><label>Adresse :</label>
-        <input type="text" th:field="*{adresse}" required/></p>
+        <input type="text" th:field="*{adresse}" class="btn btn-light mb-2" required/></p>
 
         <p><label>Code postal :</label>
-        <input type="text" th:field="*{codePostal}" required/></p>
+        <input type="text" th:field="*{codePostal}" class="btn btn-light mb-2" required/></p>
 
         <p><label>Ville :</label>
-        <input type="text" th:field="*{ville}" required/></p>
+        <input type="text" th:field="*{ville}" class="btn btn-light mb-2" required/></p>
 
-        <p><button type="submit" class="btn btn-primary" >Enregistrer</button></p>
+        <p><button type="submit" class="btn btn-primary mb-2" >Enregistrer</button></p>
 
     </div>
 </form>

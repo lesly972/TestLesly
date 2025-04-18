@@ -9,13 +9,18 @@
 <span th:text="${notif}"></span>
 
 <div class="container py-3">
-    <h1 class="text-center my-4"> Restaurant <span th:if="${restaurant.nom != null}" th:text="${restaurant.nom}"> </span> </h1>
+    <h1 style="color: #d3c3a7;" class="text-center my-4"> Restaurant <span th:if="${restaurant.nom != null}" th:text="${restaurant.nom}"> </span> </h1>
+
+    <div class="text-center my-4">
+        <h5> Nom du restaurant : </h5> <span th:text="${restaurant.nom}"></span>
+        <p><h5>Adresse du restaurant:</h5> <span th:text="${restaurant.adresse}"></span> <span th:text="${restaurant.codePostal} + ' ' + ${restaurant.ville}"></span></p>
+
+        <td><a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}" class="btn btn-primary">Modifier restaurant</a></td>
+    </div>
+
 </div>
 
-<h5> Nom du restaurant : </h5> <span th:text="${restaurant.nom}"></span>
-<p><h5>Adresse du restaurant:</h5> <span th:text="${restaurant.adresse}"></span> <span th:text="${restaurant.codePostal} + ' ' + ${restaurant.ville}"></span></p>
-
-<h4 class="text-center my-4">Affectation actuelle à ce restaurant</h4>
+<h4 class="text-center my-4">Affectation actuelle du restaurant <span th:text="${restaurant.nom}"></span> </h4>
 
 <div class="mt-4" th:if="${affectations != null and !affectations.isEmpty()}">
     <table class="table table-striped">
@@ -44,8 +49,6 @@
 <div th:if="${affectations == null or affectations.isEmpty()}">
     <p>Aucun collaborateur n'est encore affecté à ce restaurant.</p>
 </div>
-
-<td><a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}" class="btn btn-primary">Modifier restaurant</a></td>
 
 <p><p><a href="/restaurants">⬅ Retour à la liste</a></p></p>
 

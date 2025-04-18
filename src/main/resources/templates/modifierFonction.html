@@ -8,16 +8,16 @@
 <span th:text="${notif}"></span>
 
 <!-- Partie qui permet d'ajouter des collaborateurs dans la BdD -->
-<h1 class="text-center my-4">Modifications du Poste</h1>
+<h1 class="text-center my-4" style="color: #d3c3a7;">Modifications du Poste</h1>
 
 <form th:action="@{/fonctions/edit/{id}(id=${id})}" th:object="${fonctionsDto}" method="post">
 
     <div class="text-center my-4">
 
         <label>Nom du poste :</label>
-        <input type="text" th:field="*{nomDuPoste}" required/>
+        <input type="text" th:field="*{nomDuPoste}" class="btn btn-light mb-2" required/>
 
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="submit" class="btn btn-primary mb-2">Enregistrer</button>
     </div>
 </form>
 

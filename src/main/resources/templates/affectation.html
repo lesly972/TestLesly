@@ -9,7 +9,7 @@
 <span th:text="${notif}"></span>
 
 <div class="container py-3">
-    <h1 class="text-center my-4" style="color: #d3c3a7;">Affectation collaborateurs WACDO</h1>
+    <h1 class="text-center my-4" style="color: #d3c3a7;" >Affectation collaborateurs WACDO</h1>
 </div>
 
 <h4 class="text-center my-4">Affecter un collaborateur</h4>
@@ -75,11 +75,11 @@
             <tbody>
                 <tr th:each="affectationCollab : ${affectationList}">
                     <div class="mt-4" th:if="${affectationCollab.dateFin == null}">
-                        <!-- <td>
+                        <td>
                             <a th:href="@{/collaborateurs/{id}(id=${affectationCollab.id})}"
                                th:text="${affectationCollab.collaborateurs.nom}">Nom</a>
-                        </td> -->
-                        <td th:text="${affectationCollab.collaborateurs.nom}">Nom</td>
+                        </td>
+                        <!-- <td th:text="${affectationCollab.collaborateurs.nom}">Nom</td> -->
                         <td th:text="${affectationCollab.collaborateurs.prenom}">Prénom</td>
                         <td th:text="${affectationCollab.fonctions.nomDuPoste}">Poste</td>
                         <td th:text="${affectationCollab.restaurants.nom}">Restaurant</td>

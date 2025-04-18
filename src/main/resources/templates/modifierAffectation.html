@@ -12,7 +12,7 @@
 <span th:text="${notif}"></span>
 
 <div class="container mt-5">
-    <h2 class="mb-4 text-center">Modifier affectation </h2>
+    <h2 class="mb-4 text-center" style="color: #d3c3a7;">Modifier affectation collaborateur</h2>
 
     <form th:action="@{/affectation/modifier/{id}(id=${affectationId})}" th:object="${affectationDto}" method="post">
         <!-- <p>DEBUG RestaurantNom : <span th:text="${restaurantNom}">[non trouvé]</span></p> -->
@@ -35,7 +35,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Date de début du nouveau poste :</label>
+            <label class="form-label">Date de début :</label>
             <input type="date" class="form-control" th:field="*{dateDebut}" required />
         </div>
 

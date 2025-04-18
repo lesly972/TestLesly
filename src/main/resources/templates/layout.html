@@ -15,6 +15,7 @@
             display: flex;
             justify-content: center;
             gap: 10px;
+
         }
 
         .social-links img {
@@ -79,28 +80,27 @@
     </div>
 </nav>
 
-    <footer class="border-top bg-light text-muted text-center mt-auto" th:fragment="page_footer" >
+<!-- FOOTER -->
+<footer class="border-top bg-light text-muted text-center mt-auto py-3" th:fragment="page_footer">
+    <div class="social-links">
+        <a href="https://www.facebook.com" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook" />
+        </a>
+        <a href="https://www.twitter.com" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/145/145812.png" alt="Twitter" />
+        </a>
+        <a href="https://www.instagram.com" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
+        </a>
+        <a href="https://www.linkedin.com" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" />
+        </a>
+    </div>
 
-        <div class="social-links">
-            <a href="https://www.facebook.com" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook" />
-            </a>
-            <a href="https://www.twitter.com" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/145/145812.png" alt="Twitter" />
-            </a>
-            <a href="https://www.instagram.com" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
-            </a>
-            <a href="https://www.linkedin.com" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" />
-            </a>
-        </div>
-
-        <div class="container pb-5">
-            &copy; [[${#dates.format(#dates.createNow(), 'yyyy')}]] - Wacdo
-        </div>
-
-    </footer>
+    <div class="container pt-2">
+        &copy; [[${#dates.format(#dates.createNow(), 'yyyy')}]] - Wacdo
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

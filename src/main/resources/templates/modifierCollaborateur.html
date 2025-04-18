@@ -12,31 +12,31 @@
 </div> -->
 
 <!-- Partie qui permet d'ajouter des collaborateurs dans la BdD -->
-<h1 class="text-center my-4">Modifications informations</h1>
+<h1 class="text-center my-4" style="color: #d3c3a7;">Modifications informations</h1>
 
 <form th:action="@{/collaborateurs/edit/{id}(id=${id})}" th:object="${collaborateursDto}" method="post">
 
     <div class="text-center my-4">
 
         <p><label>Nom :</label>
-        <input type="text" th:field="*{nom}" required/></p>
+        <input type="text" th:field="*{nom}" class="btn btn-light mb-2" required/></p>
 
         <p><label>Prénom :</label>
-        <input type="text" th:field="*{prenom}" required/></p>
+        <input type="text" th:field="*{prenom}" class="btn btn-light mb-2" required/></p>
 
         <p><label>Email :</label>
-        <input type="email" th:field="*{email}" required/></p>
+        <input type="email" th:field="*{email}" class="btn btn-light mb-2" required/></p>
 
         <p><label>Mot de passe :</label>
-        <input type="password" th:field="*{motDePasse}" /></p>
+        <input type="password" th:field="*{motDePasse}" class="btn btn-light mb-2"/></p>
 
         <p><label>Date d'embauche :</label>
-        <input type="date" th:field="*{datePremierEmbauche}" required/></p>
+        <input type="date" th:field="*{datePremierEmbauche}" class="btn btn-light mb-2" required/></p>
 
         <p><label>Administrateur :</label>
-        <input type="checkbox" th:field="*{administrateur}" required/></p>
+        <input type="checkbox" th:field="*{administrateur}" class="btn btn-light mb-2" required/></p>
 
-        <p><button type="submit" class="btn btn-primary">Enregistrer</button></p>
+        <p><button type="submit" class="btn btn-primary mb-2">Enregistrer</button></p>
 
     </div>
 
