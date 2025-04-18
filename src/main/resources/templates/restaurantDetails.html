@@ -20,30 +20,34 @@
 
 </div>
 
-<h4 class="text-center my-4">Affectation actuelle du restaurant <span th:text="${restaurant.nom}"></span> </h4>
+<div class="container mt-5">
+<h4 class="text-center my-4">Affectation actuelle et historique du restaurant <span th:text="${restaurant.nom}"></span> </h4>
 
-<div class="mt-4" th:if="${affectations != null and !affectations.isEmpty()}">
+<div style="text-align: center;" class="mt-4" th:if="${affectations != null and !affectations.isEmpty()}">
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Fonction</th>
+                <th>Date de fin</th>
             </tr>
         </thead>
 
         <tbody>
             <tr th:each="affectationRestaurants : ${affectations}">
 
-                <div class="mt-4" th:if="${affectationRestaurants.dateFin == null}">
+                <!-- <div class="mt-4" th:if="${affectationRestaurants.dateFin == null}"> -->
                     <td th:text="${affectationRestaurants.collaborateurs.nom}">Nom</td>
                     <td th:text="${affectationRestaurants.collaborateurs.prenom}">Prénom</td>
                     <td th:text="${affectationRestaurants.fonctions.nomDuPoste}">Poste</td>
-                </div>
+                    <td th:text="${affectationRestaurants.dateFin != null ? #dates.format(affectationRestaurants.dateFin, 'dd/MM/yyyy') : 'En poste dans le restaurant'}">Fin</td>
+                <!-- </div> -->
             </tr>
         </tbody>
 
     </table>
+</div>
 </div>
 
 <div th:if="${affectations == null or affectations.isEmpty()}">
