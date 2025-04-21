@@ -23,6 +23,7 @@ WACDO est une application web de gestion des affectations de collaborateurs dans
 - Bootstrap 5
 - MySQL (base de données distante via Railway)
 - Maven
+- Inteliji
 
 ## Déploiement
 
