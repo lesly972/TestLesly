@@ -1,31 +1,39 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Début du document HTML, avec balise thymeleaf pour permettre l'injection de données côté serveur -->
+
 <head th:replace="~{layout :: page_head}"></head>
+<!-- On importe l'entête commune depuis le layout (CSS, meta etc...) -->
 
 <body style="background-color: #2c2c2c; color: #ffffff;">
+<!-- Couleur de fond sombre pour le style visuel -->
 
 <nav th:replace="~{layout :: page_navbar}"></nav>
+<!-- On affiche la barre de navigation depuis le layout partagé -->
 
 <span th:text="${notif}"></span>
+<!-- Petit espace pour afficher un message s'il y a une notification à montrer à l'utilisateur -->
 
 <div class="container py-3">
     <h1 class="text-center my-4" style="color: #d3c3a7;" >Affectation collaborateurs WACDO</h1>
 </div>
+<!-- Titre principal de la page -->
 
 <h4 class="text-center my-4">Affecter un collaborateur</h4>
+<!-- Titre pour la section du formulaire -->
 
 <div style="text-align: center;">
-
     <div th:if="${messageErreur != null}" class="alert alert-danger">
         <p th:text="${messageErreur}"></p>
     </div>
+    <!-- Si jamais une erreur survient lors de la soumission du formulaire, elle s'affiche ici -->
 
-    <!-- <p>DEBUG (taille fonctions déjà prises) : <span th:if="${combinaisonsActives != null}" th:text="${#lists.size(combinaisonsActives)}">0</span></p> -->
-
+    <!-- Formulaire pour affecter un collaborateur à un poste dans un restaurant -->
     <form th:action="@{/affectation}" th:object="${affectationDto}" method="post">
 
         Nom collaborateur :
         <select th:field="*{collaborateurId}" name="collaborateurId" class="btn btn-light mb-2" required>
+            <!-- Boucle sur les collaborateurs pour afficher dans la liste déroulante -->
             <option th:each="c : ${collaborateurs}"
                     th:value="${c.id}"
                     th:text="${c.nom + ' ' + c.prenom}">
@@ -56,46 +64,45 @@
     </form>
 </div>
 
+<!-- Section qui affiche la liste des affectations existantes -->
 <div class="container mt-5">
     <h4 class="text-center mb-4">Liste des affectations</h4>
 
     <div style="text-align: center;">
-
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Poste</th>
-                    <th>Restaurant</th>
-                    <th>Date de début</th>
-                    <th>Date de fin</th>
-                </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Poste</th>
+                <th>Restaurant</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+            </tr>
             </thead>
 
             <tbody>
-                <tr th:each="affectationCollab : ${affectationList}">
-                    <div class="mt-4" th:if="${affectationCollab.dateFin == null}">
-                        <!--<td>
-                            <a th:href="@{/collaborateurs/{id}(id=${affectationCollab.id})}"
-                               th:text="${affectationCollab.collaborateurs.nom}">Nom</a>
-                        </td> -->
-                        <td th:text="${affectationCollab.collaborateurs.nom}">Nom</td>
-                        <td th:text="${affectationCollab.collaborateurs.prenom}">Prénom</td>
-                        <td th:text="${affectationCollab.fonctions.nomDuPoste}">Poste</td>
-                        <td th:text="${affectationCollab.restaurants.nom}">Restaurant</td>
-                        <td th:text="${#dates.format(affectationCollab.dateDebut, 'dd/MM/yyyy')}">Date</td>
-                        <td th:text="${affectationCollab.dateFin != null ? #dates.format(affectationCollab.dateFin, 'dd/MM/yyyy') : 'En poste dans le restaurant'}">Fin</td>
-                    </div>
-                </tr>
+            <tr th:each="affectationCollab : ${affectationList}">
+                <!-- Pour éviter d'afficher les affectations terminées, on vérifie que la date de fin est vide -->
+                <div class="mt-4" th:if="${affectationCollab.dateFin == null}">
+                    <td th:text="${affectationCollab.collaborateurs.nom}">Nom</td>
+                    <td th:text="${affectationCollab.collaborateurs.prenom}">Prénom</td>
+                    <td th:text="${affectationCollab.fonctions.nomDuPoste}">Poste</td>
+                    <td th:text="${affectationCollab.restaurants.nom}">Restaurant</td>
+                    <td th:text="${#dates.format(affectationCollab.dateDebut, 'dd/MM/yyyy')}">Date</td>
+                    <td th:text="${affectationCollab.dateFin != null ? #dates.format(affectationCollab.dateFin, 'dd/MM/yyyy') : 'En poste dans le restaurant'}">Fin</td>
+                </div>
+            </tr>
             </tbody>
         </table>
     </div>
 </div>
 
+<!-- Liste des collaborateurs qui n'ont pas d'affectation active -->
 <h4 class="text-center my-4">Collaborateurs sans affectation</h4>
 
 <div class="d-flex justify-content-center flex-wrap gap-3">
+    <!-- Boucle sur les collaborateurs sans affectation pour les afficher joliment -->
     <div th:each="collab : ${collaborateursSansAffectation}" class="collab-card" style="width: max-content;">
         <ul class="list-group">
             <a th:href="@{/collaborateurs/{id}(id=${collab.id})}" class="list-group-item">
@@ -105,10 +112,10 @@
     </div>
 </div>
 
-
+<!-- Pied de page (importé du layout) -->
 <footer th:replace="~{layout :: page_footer}"></footer>
 
-    <!-- scripts -->
+<!-- Script JS pour désactiver les fonctions déjà affectées -->
 <script th:inline="javascript">
     const combinaisonsActives = /*[[${combinaisonsActives}]]*/ [];
 
@@ -120,8 +127,9 @@
         console.log(" JS actif : updateFonctionsDisponibles exécuté !");
         const collabId = collaborateurSelect.value;
         const restoId = restaurantSelect.value;
-        const key = `${collabId}-${restoId}`; // ️ correspond à la structure des clés côté backend
+        const key = `${collabId}-${restoId}`;
 
+        // Si la combinaison existe déjà, on désactive les options de poste
         const griser = combinaisonsActives.includes(key);
 
         Array.from(fonctionSelect.options).forEach(option => {
@@ -131,12 +139,14 @@
         });
     }
 
+    // Mise à jour dès qu'on change le collaborateur ou le restaurant
     collaborateurSelect.addEventListener('change', updateFonctionsDisponibles);
     restaurantSelect.addEventListener('change', updateFonctionsDisponibles);
     window.addEventListener('DOMContentLoaded', updateFonctionsDisponibles);
 </script>
 
-
+<!-- Bootstrap JS pour les composants dynamiques -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
 </body>
 </html>

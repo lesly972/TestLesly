@@ -1,5 +1,7 @@
+// Le package dans lequel se trouve le controller
 package com.gdu.wacdo.controller;
 
+// Importation des objets dont on aura besoin pour gérer les collaborateurs
 import com.gdu.wacdo.dtos.CollaborateursDto;
 import com.gdu.wacdo.entities.Affectation;
 import com.gdu.wacdo.entities.Collaborateurs;
@@ -8,29 +10,30 @@ import com.gdu.wacdo.service.AffectationService;
 import com.gdu.wacdo.service.CollaborateursService;
 import com.gdu.wacdo.service.FonctionsService;
 import com.gdu.wacdo.service.RestaurantService;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
+// On déclare cette classe comme un controller Spring MVC
 @Controller
 
-//Affiche les logs
+// Permet d’afficher des logs dans la console
 @Slf4j
-
 public class CollaborateursController {
 
+    // On déclare tous les services nécessaires
     public final CollaborateursService collaborateursService;
     private final AffectationService affectationService;
     private final RestaurantService restaurantService;
     private final FonctionsService fonctionsService;
 
+    // Constructeur, il sert à injecter tous les services dans ce controller
     public CollaborateursController(CollaborateursService collaborateursService, AffectationService affectationService, RestaurantService restaurantService, FonctionsService fonctionsService) {
         this.collaborateursService = collaborateursService;
         this.affectationService = affectationService;
@@ -38,63 +41,81 @@ public class CollaborateursController {
         this.fonctionsService = fonctionsService;
     }
 
-    //+++++++++++++++++++++++++++++++++++++++++++++++Gestion de la page collaborateur avec le formulaire et la liste des collaborateurs++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++ Affichage de la page principale collaborateurs ++++++++++++++++++++
     @GetMapping("/collaborateurs")
-
     public String getHomePageCollaborateurs(Model model) {
+        // On envoie un DTO vide pour le formulaire d'ajout
         model.addAttribute("collaborateursDto", new CollaborateursDto());
-        model.addAttribute("collaborateursList",collaborateursService.getAllCollaborateurs());
 
-        return "collaborateurs"; //Retour sur le fichier HTML collaborateur
-    }
-
-    //+++++++++++++++++++++++++++++++++++++++++++++++Gestion du formulaire colaborateurs++++++++++++++++++++++++++++++++++++++++++++
-    @PostMapping("/myFormCollaborateurs")
-    public String getDataCollaborateurs(CollaborateursDto dto, Model model){
-        Collaborateurs collaborateursReponse = collaborateursService.saveCollaborateurs(dto);
-
-        //affiche directement la liste une fois retourné ou ajout d'un collaborateur
+        // Et on envoie la liste de tous les collaborateurs pour les afficher
         model.addAttribute("collaborateursList", collaborateursService.getAllCollaborateurs());
+
+        // Renvoi vers la vue `collaborateurs.html`
         return "collaborateurs";
     }
 
-    //+++++++++++++++++++++++++++++++++++++++++++++++Gestion des détails des collaborateurs++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++ Traitement du formulaire d'ajout de collaborateur ++++++++++++++++++++
+    @PostMapping("/myFormCollaborateurs")
+    public String getDataCollaborateurs(CollaborateursDto dto, Model model){
+        // On sauvegarde le collaborateur en base
+        Collaborateurs collaborateursReponse = collaborateursService.saveCollaborateurs(dto);
+
+        // On recharge la liste pour afficher à jour
+        model.addAttribute("collaborateursList", collaborateursService.getAllCollaborateurs());
+
+        return "collaborateurs"; // on reste sur la même page
+    }
+
+    // ++++++++++++++++++++ Affichage des détails d’un collaborateur ++++++++++++++++++++
     @GetMapping("/collaborateurs/{id}")
-    // Pathvariable récup un param de l'url
     public String getCollaborateurDetails(@PathVariable("id") Long id, Model model) {
 
+        // On récupère le collaborateur via son id
         Collaborateurs collaborateurTrouve = collaborateursService.getCollabDetails(id);
+
+        // Si trouvé, on ajoute ses infos au modèle
         if (collaborateurTrouve != null) {
             model.addAttribute("collaborateur", collaborateurTrouve);
+
+            // On récupère tout son historique d'affectation
             List<Affectation> historique = affectationService.getHistoriqueAffectationsParCollaborateur(id);
             model.addAttribute("historique", historique);
         } else {
+            // Sinon on affiche une notif d’erreur
             model.addAttribute("notif", "Collaborateur non trouvé !");
         }
 
-        //Afffiche les affectation du collaborateur ( restaurant et poste)
+        // On récupère sa dernière affectation (la plus récente)
         Affectation affectation = affectationService.getDerniereAffectation(id);
         model.addAttribute("affectation", affectation);
 
-        return "collaborateurDetails"; // page de détails
+        return "collaborateurDetails"; // Vue associée
     }
 
-    //+++++++++++++++++++++++++++++++++++++++++++++++Modification des détails des collaborateurs++++++++++++++++++++++++++++++++++++++++++++
+    // ++++++++++++++++++++ Formulaire de modification d’un collaborateur ++++++++++++++++++++
     @GetMapping("/collaborateurs/edit/{id}")
     public String afficherFormModification(@PathVariable Long id, Model model) {
+        // On récupère le collaborateur et on le convertit en DTO pour pré-remplir le formulaire
         CollaborateursDto dto = collaborateursService.getCollaborateurDto(id);
+
         model.addAttribute("collaborateursDto", dto);
         model.addAttribute("id", id);
-        //model.addAttribute("restaurants", restaurantService.getAllRestaurants());
-        //model.addAttribute("fonctions", fonctionsService.getAllFonctions());
+
+        // Si jamais on veut ajouter d'autres données dans le formulaire, comme les fonctions ou restos, c’est là
+        // model.addAttribute("restaurants", restaurantService.getAllRestaurants());
+        // model.addAttribute("fonctions", fonctionsService.getAllFonctions());
+
         return "modifierCollaborateur";
     }
 
+    // ++++++++++++++++++++ Enregistrement de la modif du collaborateur ++++++++++++++++++++
     @PostMapping("/collaborateurs/edit/{id}")
     public String enregistrerModifications(@PathVariable Long id, @ModelAttribute("collaborateursDto") CollaborateursDto dto) {
+        // On appelle le service pour sauvegarder les modifs
         collaborateursService.updateCollaborateur(id, dto);
+
+        // Redirection vers la page liste des collaborateurs
         return "redirect:/collaborateurs";
     }
-
 
 }

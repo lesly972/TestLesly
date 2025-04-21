@@ -1,30 +1,39 @@
+// Package dans lequel est rangée la classe (on garde tout bien organisé)
 package com.gdu.wacdo.entities;
 
+// Importation des annotations et classes nécessaires pour gérer les entités
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//@Data
-
-//Entity va dire à la base d'utiliser le nom de la class ici Restaurants pour la transformer en table
+// @Entity indique à Spring/Hibernate que cette classe doit être liée à une table dans la base de données
 @Entity
-
 public class Restaurants {
 
-    @Id //définis que l'attribu id ci-dessous deviens la clef primaire.
+    // L'identifiant unique du restaurant (clé primaire auto-générée)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Nom du restaurant (ex : Wacdo Paris 1)
     private String nom;
+
+    // Adresse postale (numéro et rue)
     private String adresse;
+
+    // Code postal du restaurant
     private String codePostal;
+
+    // Ville où se situe le restaurant
     private String ville;
 
-    @OneToMany(mappedBy = "restaurants")
+    // Relation OneToMany : un restaurant peut avoir plusieurs affectations (plusieurs employés qui y bossent à différents moments)
+    @OneToMany(mappedBy = "restaurants") // "restaurants" correspond à la propriété dans la classe Affectation
     private List<Affectation> affectations = new ArrayList<>();
 
+    // Constructeur avec paramètres (pratique pour créer rapidement un restaurant)
     public Restaurants(String ville, String codePostal, String adresse, String nom) {
         this.ville = ville;
         this.codePostal = codePostal;
@@ -32,9 +41,12 @@ public class Restaurants {
         this.nom = nom;
     }
 
-    public Restaurants() {
+    // Constructeur vide requis par JPA/Hibernate
+    public Restaurants() {}
 
-    }
+    // --------------------------
+    // Getters & Setters
+    // --------------------------
 
     public Long getId() {
         return id;
@@ -75,5 +87,4 @@ public class Restaurants {
     public void setVille(String ville) {
         this.ville = ville;
     }
-
 }

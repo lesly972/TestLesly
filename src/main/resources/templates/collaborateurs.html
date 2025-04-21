@@ -1,43 +1,62 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Le layout va injecter ici tout le contenu <head> (comme Bootstrap, encodage, titre, etc.) -->
 <head th:replace="~{layout :: page_head}"></head>
-<body style="background-color: #2c2c2c; color: #ffffff;">
 
+<body style="background-color: #2c2c2c; color: #ffffff;">
+<!-- Le fond de page est sombre, et on écrit en blanc (look stylé) -->
+
+<!-- Navbar commune à toutes les pages -->
 <nav th:replace="~{layout :: page_navbar}"></nav>
 
+<!-- Si une notif existe (genre un msg d'erreur ou info), on l’affiche ici -->
 <span th:text="${notif}"></span>
 
+<!-- Titre principal de la page -->
 <div class="container py-3">
     <h1 class="text-center my-4" style="color: #d3c3a7;">Collaborateurs WACDO</h1>
 </div>
 
-<!-- Partie qui permet d'ajouter des collaborateurs dans la BdD -->
+<!-- ============================ FORMULAIRE POUR AJOUTER UN COLLAB ============================ -->
+
 <h4 class="text-center my-4">Ajouter un collaborateur</h4>
 
+<!-- Centrage du formulaire -->
 <div style="text-align: center;">
+    <!-- Le formulaire POST s’envoie vers /myFormCollaborateurs, et est bindé à un DTO côté backend -->
     <form method="POST" th:action="@{/myFormCollaborateurs}" th:object="${collaborateursDto}" class="w-10/12 mx-auto flex justify-center">
+
+        <!-- Chaque champ récupère une info : nom, prénom, email, etc. -->
         <input type="text" name="nom" placeholder="Nom du collaborateur" class="btn btn-light mb-2" required/>
         <input type="text" name="prenom" placeholder="Prénom du collaborateur" class="btn btn-light mb-2" required/>
         <input type="email" name="email" placeholder="Adresse Mail" class="btn btn-light mb-2" required/>
         <input type="password" name="motDePasse" placeholder="Mot de Passe" class="btn btn-light mb-2" required/>
         <input type="date" name="datePremierEmbauche" placeholder="Date Premier Embauche" class="btn btn-light mb-2" required/>
 
+        <!-- Choix du rôle admin ou pas admin -->
         <span>Administrateur :</span>
         <input type="radio" th:field="*{administrateur}" value="true" required/> Oui
         <input type="radio" th:field="*{administrateur}" value="false" required/> Non
 
+        <!-- Bouton pour soumettre le formulaire -->
         <input type="submit" value="Enregistrer" class="btn btn-primary mn-2"/>
     </form>
 </div>
 
+<!-- ============================ LISTE DES COLLABORATEURS ============================ -->
+
+<!-- Un sous-titre pour séparer la liste des collaborateurs enregistrés -->
 <div class="container py-3">
     <h4 class="text-center my-4">Liste collaborateurs WACDO</h4>
 </div>
 
+<!-- On boucle sur chaque collaborateur reçu du backend -->
 <div class="container">
     <div th:each="collab : ${collaborateursList}" class="d-flex justify-content-center mb-3">
+        <!-- Pour chaque collaborateur, on affiche son nom et prénom dans une carte -->
         <div class="collab-card" style="width: max-content;">
             <ul class="list-group">
+                <!-- Le lien dirige vers la page détail du collaborateur -->
                 <a th:href="@{/collaborateurs/{id}(id=${collab.id})}" class="list-group-item">
                     <span th:text="${collab.nom}"></span> <span th:text="${collab.prenom}"></span>
                 </a>
@@ -46,8 +65,10 @@
     </div>
 </div>
 
+<!-- Pied de page de l’appli (réutilisé dans toutes les pages) -->
 <footer th:replace="~{layout :: page_footer}"></footer>
 
+<!-- Script JS Bootstrap pour les composants dynamiques (menu, modals, etc.) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

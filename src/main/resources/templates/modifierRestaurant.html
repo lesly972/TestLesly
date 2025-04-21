@@ -1,38 +1,70 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Balise standard, avec thymeleaf activé via xmlns -->
+
 <head th:replace="~{layout :: page_head}"></head>
+<!-- Ici on réutilise le head commun à toutes les pages : meta, bootstrap, style général -->
+
 <body style="background-color: #2c2c2c; color: #ffffff;">
+<!-- Couleur de fond sombre + texte clair pour rester dans la charte de WACDO -->
 
 <nav th:replace="~{layout :: page_navbar}"></nav>
+<!-- Barre de navigation importée depuis le layout général (très pratique pour éviter les copier/coller) -->
 
-<!-- Partie qui permet d'ajouter des collaborateurs dans la BdD -->
+<!-- ----------------------------------- -->
+<!-- TITRE DE LA PAGE DE MODIFICATION -->
+<!-- ----------------------------------- -->
 <h1 class="text-center my-4" style="color: #d3c3a7;">Modification des informations</h1>
+<!-- On met un titre clair au centre, avec une couleur douce pour rappeler le thème général -->
 
+<!-- ----------------------------------- -->
+<!-- FORMULAIRE DE MODIFICATION -->
+<!-- ----------------------------------- -->
 <form th:action="@{/restaurants/edit/{id}(id=${id})}" th:object="${restaurantsDto}" method="post">
+    <!-- Ce formulaire utilise les données du DTO restaurantsDto et les renvoie en POST à l'URL d'édition -->
 
     <div class="text-center my-4">
+        <!-- Conteneur pour centrer tous les champs -->
 
-        <p><label>Nom :</label>
-        <input type="text" th:field="*{nom}" class="btn btn-light mb-2" required/></p>
+        <p>
+            <label>Nom :</label>
+            <input type="text" th:field="*{nom}" class="btn btn-light mb-2" required/>
+            <!-- Champ de saisie relié au champ 'nom' du DTO -->
+        </p>
 
-        <p><label>Adresse :</label>
-        <input type="text" th:field="*{adresse}" class="btn btn-light mb-2" required/></p>
+        <p>
+            <label>Adresse :</label>
+            <input type="text" th:field="*{adresse}" class="btn btn-light mb-2" required/>
+            <!-- Idem, pour l'adresse -->
+        </p>
 
-        <p><label>Code postal :</label>
-        <input type="text" th:field="*{codePostal}" class="btn btn-light mb-2" required/></p>
+        <p>
+            <label>Code postal :</label>
+            <input type="text" th:field="*{codePostal}" class="btn btn-light mb-2" required/>
+            <!-- Pour le code postal -->
+        </p>
 
-        <p><label>Ville :</label>
-        <input type="text" th:field="*{ville}" class="btn btn-light mb-2" required/></p>
+        <p>
+            <label>Ville :</label>
+            <input type="text" th:field="*{ville}" class="btn btn-light mb-2" required/>
+            <!-- Et la ville -->
+        </p>
 
-        <p><button type="submit" class="btn btn-primary mb-2" >Enregistrer</button></p>
-
+        <p>
+            <button type="submit" class="btn btn-primary mb-2">Enregistrer</button>
+            <!-- Bouton qui déclenche la soumission du formulaire -->
+        </p>
     </div>
 </form>
 
+<!-- Lien de retour vers la liste complète des restaurants -->
 <a href="/restaurants">⬅ Retour à la liste</a>
 
+<!-- Pied de page importé depuis le layout (liens réseaux + copyright dynamique) -->
 <footer th:replace="~{layout :: page_footer}"></footer>
 
+<!-- Bootstrap pour le responsive et les composants UI -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 </html>

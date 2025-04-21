@@ -1,14 +1,9 @@
 package com.gdu.wacdo.service;
 
+// Importation des dépendances nécéssaires
 import com.gdu.wacdo.dtos.AffectationDto;
-import com.gdu.wacdo.entities.Affectation;
-import com.gdu.wacdo.entities.Collaborateurs;
-import com.gdu.wacdo.entities.Fonctions;
-import com.gdu.wacdo.entities.Restaurants;
-import com.gdu.wacdo.repositories.AffectationRepository;
-import com.gdu.wacdo.repositories.CollaborateursRepository;
-import com.gdu.wacdo.repositories.FonctionsRepository;
-import com.gdu.wacdo.repositories.RestaurantsRepository;
+import com.gdu.wacdo.entities.*;
+import com.gdu.wacdo.repositories.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,15 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-
-import java.time.ZoneId;
-import java.util.Date;
-
 import java.util.Date;
 import java.util.List;
 
+// Service Spring (bean injecté automatiquement)
 @Service
-
 public class AffectationService {
 
     private final AffectationRepository affectationRepository;
@@ -32,17 +23,21 @@ public class AffectationService {
     private final FonctionsRepository fonctionsRepository;
     private final RestaurantsRepository restaurantsRepository;
 
-    public AffectationService(AffectationRepository affectationRepository,CollaborateursRepository collaborateursRepository,FonctionsRepository fonctionsRepository,RestaurantsRepository restaurantsRepository) {
+    // Constructeur avec injection des repository nécessaires au service
+    public AffectationService(AffectationRepository affectationRepository,
+                              CollaborateursRepository collaborateursRepository,
+                              FonctionsRepository fonctionsRepository,
+                              RestaurantsRepository restaurantsRepository) {
         this.affectationRepository = affectationRepository;
         this.collaborateursRepository = collaborateursRepository;
         this.fonctionsRepository = fonctionsRepository;
         this.restaurantsRepository = restaurantsRepository;
     }
 
-
+    // Crée une nouvelle affectation à partir du DTO
     public Affectation creerAffectation(AffectationDto dto) {
 
-        //  Vérifie si déjà affecté à ce restaurant
+        // Vérifie si le collaborateur a déjà une affectation en cours dans ce resto
         boolean dejaAffecteDansResto = affectationRepository
                 .existsByCollaborateurs_IdAndRestaurants_IdAndDateFinIsNull(
                         dto.getCollaborateurId(),
@@ -50,16 +45,19 @@ public class AffectationService {
                 );
 
         if (dejaAffecteDansResto) {
+            // Si c'est le cas, on lève une erreur pour bloquer
             throw new IllegalStateException("Ce collaborateur a déjà un poste actif dans ce restaurant.");
         }
 
+        // On récupère les entités complètes à partir des ID envoyés dans le formulaire (dto)
         Collaborateurs collab = collaborateursRepository.findById(dto.getCollaborateurId()).orElse(null);
         Fonctions fonction = fonctionsRepository.findById(dto.getFonctionId()).orElse(null);
         Restaurants restaurant = restaurantsRepository.findById(dto.getRestaurantId()).orElse(null);
 
+        // Vérification de sécurité, on retourne null si une des entités est absente
         if (collab == null || fonction == null || restaurant == null) return null;
 
-        //  Clôturer uniquement l'affectation active dans CE restaurant (si elle existe)
+        // Si une affectation sans date de fin existe déjà pour CE resto, on la clôture
         List<Affectation> affectationsExistantes = affectationRepository.findByCollaborateurs_IdOrderByDateDebutDesc(dto.getCollaborateurId());
         Affectation affectationDansResto = affectationsExistantes.stream()
                 .filter(a -> a.getRestaurants().getId().equals(dto.getRestaurantId()) && a.getDateFin() == null)
@@ -71,12 +69,13 @@ public class AffectationService {
             affectationRepository.save(affectationDansResto);
         }
 
+        // Création de la nouvelle affectation
         Affectation nouvelle = new Affectation();
         nouvelle.setCollaborateurs(collab);
         nouvelle.setFonctions(fonction);
         nouvelle.setRestaurants(restaurant);
         nouvelle.setDateDebut(dto.getDateDebut());
-        nouvelle.setDateFin(null); // active
+        nouvelle.setDateFin(null); // null = active
 
         return affectationRepository.save(nouvelle);
     }
@@ -93,7 +92,7 @@ public class AffectationService {
         return affectationRepository.findByRestaurants_Id(restaurantId);
     }
 
-
+    // Pour modifier une affectation (remplace l'ancienne par une nouvelle)
     @Transactional
     public void modifierAffectation(Long id, AffectationDto dto) {
         Affectation ancienneAffectation = affectationRepository.findById(id).orElse(null);
@@ -101,11 +100,11 @@ public class AffectationService {
             throw new IllegalArgumentException("Affectation non trouvée");
         }
 
-        // Clôture de l'ancienne affectation
+        // On cloture l'ancienne
         ancienneAffectation.setDateFin(new Date());
         affectationRepository.save(ancienneAffectation);
 
-        // Vérifie s’il existe déjà une affectation active identique
+        // On vérifie qu'il n'y a pas déjà une affectation identique active
         boolean existeDeja = affectationRepository.existsByCollaborateurs_IdAndRestaurants_IdAndDateFinIsNull(
                 dto.getCollaborateurId(), dto.getRestaurantId()
         );
@@ -114,7 +113,7 @@ public class AffectationService {
             throw new IllegalStateException("Une affectation active existe déjà pour ce collaborateur dans ce restaurant.");
         }
 
-        // Création d'une nouvelle affectation
+        // On recrée une affectation avec les nouvelles infos
         Collaborateurs collab = collaborateursRepository.findById(dto.getCollaborateurId()).orElse(null);
         Fonctions fonction = fonctionsRepository.findById(dto.getFonctionId()).orElse(null);
         Restaurants restaurant = restaurantsRepository.findById(dto.getRestaurantId()).orElse(null);
@@ -124,11 +123,10 @@ public class AffectationService {
         nouvelle.setFonctions(fonction);
         nouvelle.setRestaurants(restaurant);
         nouvelle.setDateDebut(dto.getDateDebut());
-        nouvelle.setDateFin(dto.getDateFin()); // ou null si active
+        nouvelle.setDateFin(dto.getDateFin());
 
         affectationRepository.save(nouvelle);
     }
-
 
     public List<Affectation> getHistoriqueAffectationsParCollaborateur(Long collabId) {
         return affectationRepository.findByCollaborateurs_IdOrderByDateDebutDesc(collabId);
@@ -138,7 +136,7 @@ public class AffectationService {
         List<Affectation> affectations = affectationRepository.findByCollaborateurs_IdOrderByDateDebutDesc(collaborateurId);
         if (affectations.isEmpty()) return null;
 
-        return affectations.get(0); // la plus récente en premier
+        return affectations.get(0); // On récupère la plus récente
     }
 
     public List<Affectation> getAffectationsActives() {
@@ -155,6 +153,7 @@ public class AffectationService {
                 .toList();
     }
 
+    // Gestionnaire d'exception global pour donner des retours plus propre
     @ControllerAdvice
     public class GlobalExceptionHandler {
 
@@ -173,6 +172,7 @@ public class AffectationService {
         }
     }
 
+    // Renvoie la liste des collaborateurs qui ne sont pas affectés (aucune affectation active)
     public List<Collaborateurs> getCollaborateursSansAffectation() {
         List<Collaborateurs> tous = collaborateursRepository.findAll();
         List<Long> idsAffectes = affectationRepository.findAll().stream()
@@ -180,9 +180,9 @@ public class AffectationService {
                 .map(a -> a.getCollaborateurs().getId())
                 .distinct()
                 .toList();
+
         return tous.stream()
                 .filter(c -> !idsAffectes.contains(c.getId()))
                 .toList();
     }
-
 }
