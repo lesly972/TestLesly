@@ -9,7 +9,7 @@
 
 <!-- ------------------------------DETAILS DU COLLABORATEUR -------------------------------------- -->
 
-<div style="text-align: center;"> <h1 style="color: #d3c3a7;">Détails du Collaborateur <span th:text="${collaborateur.nom}"></span></p></h1> </div>
+<div style="text-align: center;"> <h1 style="color: #d3c3a7;">Détails du Collaborateur </h1> </div>
 
 <div style="text-align: center;" th:if="${collaborateur != null}">
     <p>Nom : <span th:text="${collaborateur.nom}"></span></p>
@@ -19,7 +19,7 @@
     <p>Administrateur : <span th:text="${collaborateur.administrateur ? 'Oui' : 'Non'}"></span></p>
 
     <!-- boutton pour modifier les informations du collaborateur dans une page edit -->
-    <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collaborateur.id})}" class="btn btn-primary">Modifier information collaborateur</a></td>
+    <td> <a th:href="@{/collaborateurs/edit/{id}(id=${collaborateur.id})}" class="btn btn-primary">Modifier les informations</a></td>
 
     <!-- ------------------------------AFFECTATION DU COLLABORATEUR -------------------------------------- -->
     <!-- <div style="text-align: center;" th:if="${affectation != null}" class="mt-4">

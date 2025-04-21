@@ -180,12 +180,9 @@ public class AffectationService {
                 .map(a -> a.getCollaborateurs().getId())
                 .distinct()
                 .toList();
-
         return tous.stream()
                 .filter(c -> !idsAffectes.contains(c.getId()))
                 .toList();
     }
-
-
 
 }

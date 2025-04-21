@@ -61,7 +61,6 @@ public class AffectationController {
                     a.getFonctions().getId());
         }
 
-
         List<String> fonctionsDejaAffectees = affectationsActives.stream()
                 .map(a -> a.getCollaborateurs().getId() + "-" + a.getRestaurants().getId() + "-" + a.getFonctions().getId())
                 .toList();
@@ -101,7 +100,6 @@ public class AffectationController {
             return "affectation";
         }
     }
-
 
     // Méthode pour afficher les détails d'une affectation spécifique
     @GetMapping("/affectation/{id}")

@@ -6,8 +6,6 @@
 
 <nav th:replace="~{layout :: page_navbar}"></nav>
 
-<span th:text="${notif}"></span>
-
 <div class="container py-3">
     <h1 style="color: #d3c3a7;" class="text-center my-4"> Restaurant <span th:if="${restaurant.nom != null}" th:text="${restaurant.nom}"> </span> </h1>
 
@@ -18,9 +16,7 @@
         <td><a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}" class="btn btn-primary">Modifier restaurant</a></td>
     </div>
 
-</div>
 
-<div class="container mt-5">
 <h4 class="text-center my-4">Affectation actuelle et historique du restaurant <span th:text="${restaurant.nom}"></span> </h4>
 
 <div style="text-align: center;" class="mt-4" th:if="${affectations != null and !affectations.isEmpty()}">
@@ -45,7 +41,6 @@
                 <!-- </div> -->
             </tr>
         </tbody>
-
     </table>
 </div>
 </div>
@@ -54,7 +49,7 @@
     <p>Aucun collaborateur n'est encore affecté à ce restaurant.</p>
 </div>
 
-<p><p><a href="/restaurants">⬅ Retour à la liste</a></p></p>
+<p><a href="/restaurants">⬅ Retour à la liste</a></p>
 
 <footer th:replace="~{layout :: page_footer}"></footer>
 
